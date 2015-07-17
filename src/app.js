@@ -11,9 +11,9 @@ var touch = require('./utils/touch');
 
 
 var AppElement = document.getElementById('app');
-var PageIndex = 0;
+var PageIndex = 2;
 
-console.log(data.data.pages[PageIndex]);
+AppElement.style.background = data.data.pages[PageIndex].bgcol;
 
 React.render(
   <PageComponent

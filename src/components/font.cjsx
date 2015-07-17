@@ -6,6 +6,7 @@ FontComponent = React.createClass
     style:PropTypes.node
     },
   render: ->
-    <div className="font" style={@.props.style}>{@.props.children}</div>
+    <div className="font" style={@.props.style} dangerouslySetInnerHTML={{__html:@.props.children}}>
+    </div>
 
 module.exports = FontComponent

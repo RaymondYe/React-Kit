@@ -9,7 +9,7 @@ PageComponent = React.createClass
   mixins: [Log]
   render: ->
 
-    <div className="page" stlye={{backgroundColor:@.props.bgcol}}>
+    <div className="page" style={{backgroundColor:@.props.bgcol}}>
 
       {for i in @.props.data.cmps
         if i.cmpType == "image"

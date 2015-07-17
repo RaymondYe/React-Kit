@@ -4,6 +4,7 @@ Touch = {}
 
 Touch.initEvent = ()->
   @.dragEvent()
+  @.Pinchend()
 
 Touch.dragEvent = ()->
 
@@ -25,6 +26,27 @@ Touch.dragEvent = ()->
   touch.on target, 'dragend', (ev)->
     dx += ev.x
     dy += ev.y
+
+Touch.Pinchend = ()->
+
+  traget = 'img'
+  initialScale = 1
+  currentScale = null
+  document.getElementsByTagName(traget)[0].style.webkitTransition = 'all ease 0.05s'
+
+  touch.on traget, 'touchstart', (ev)->
+    ev.preventDefault();
+
+  touch.on traget, 'pinchend', (ev)->
+    currentScale = ev.scale - 1
+    currentScale = initialScale + currentScale
+    currentScale = currentScale > 2 ? 2 : currentScale
+    currentScale = currentScale < 1 ? 1 : currentScale
+    this.style.webkitTransform = 'scale(' + currentScale + ')'
+    console.log "当前缩放比例为:" + currentScale + "."
+
+  touch.on traget, 'pinchend', (ev)->
+    initialScale = currentScale
 
 Touch.offEvent = (element)->
   touch.on(element, 'drag dragend')
