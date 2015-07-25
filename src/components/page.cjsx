@@ -5,10 +5,19 @@ Log = require("../utils/log")
 ImageComponent = require("./image")
 FontComponent = require("./font")
 
+PropTypes = React.PropTypes
+
 PageComponent = React.createClass
+  # 验证数据有效性
+  propsTypes:{
+    name: PropTypes.string,
+    bgcol: PropTypes.string,
+    cpms: PropTypes.node.isRequired,
+    showTitle: PropTypes.boolean
+  }
   mixins: [Log]
   render: ->
-
+    @.log 'create render'
     <div className="page" style={{backgroundColor:@.props.bgcol}}>
 
       {for i in @.props.data.cmps
@@ -22,4 +31,4 @@ PageComponent = React.createClass
 
     </div>
 
-module.exports = PageComponent;
+module.exports = PageComponent

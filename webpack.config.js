@@ -73,7 +73,7 @@ const config = {
     new webpack.optimize.OccurenceOrderPlugin(),
     new ExtractTextPlugin('app.bundle.css'),
   ],
-  devtool: DEBUG ? 'source-map' : false,
+  devtool: 'eval-source-map',
 
   postcss: [autoprefixer(AUTOPREFIXER_BROWSERS)]
 };

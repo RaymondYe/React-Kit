@@ -2,13 +2,27 @@ touch = require('../lib/js/touch')
 
 Touch = {}
 
-Touch.initEvent = ()->
+Touch.componentDidMount = ()->
+  @.dragEvent(@.getDOMNode(),@.touchDrag)
+
+Touch.componentWillUnmount = ()->
+  @.offEvent(@.getDOMNode)
+
+Touch.touchPinchend = (currentScale)->
+  @.state.style.webkitTransform = 'scale(' + currentScale + ')'
+  @.setState({style:@.state.style})
+
+Touch.touchDrag = (x, y)->
+  @.state.style.webkitTransform = "translate3d(" + x + "," + y + ",0)"
+  @.setState({style:@.state.style})
+
+Touch.bindAllEvent = ()->
   @.dragEvent()
   @.Pinchend()
 
-Touch.dragEvent = ()->
+Touch.dragEvent = (el, cb)->
 
-  target = 'img'
+  target = el
   dx = null
   dy = null
   touch.on target, 'touchstart', (ev)->
@@ -18,32 +32,35 @@ Touch.dragEvent = ()->
 
     dx = dx || 0
     dy = dy || 0
-    console.log dx+dy
+
     offx = dx + ev.x + 'px'
     offy = dy + ev.y + 'px'
-    this.style.webkitTransform = "translate3d(" + offx + "," + offy + ",0)"
+
+    if cb
+      cb(offx, offy)
 
   touch.on target, 'dragend', (ev)->
     dx += ev.x
     dy += ev.y
 
-Touch.Pinchend = ()->
+Touch.Pinchend = (el ,cb)->
 
-  traget = 'img'
+  traget = el
+  el.style.webkitTransition = 'all ease 0.05s'
+
   initialScale = 1
-  currentScale = null
-  document.getElementsByTagName(traget)[0].style.webkitTransition = 'all ease 0.05s'
+  currentScale = 0
 
   touch.on traget, 'touchstart', (ev)->
     ev.preventDefault();
 
   touch.on traget, 'pinchend', (ev)->
+
     currentScale = ev.scale - 1
     currentScale = initialScale + currentScale
-    currentScale = currentScale > 2 ? 2 : currentScale
-    currentScale = currentScale < 1 ? 1 : currentScale
-    this.style.webkitTransform = 'scale(' + currentScale + ')'
-    console.log "当前缩放比例为:" + currentScale + "."
+
+    if(cb)
+      cb(currentScale)
 
   touch.on traget, 'pinchend', (ev)->
     initialScale = currentScale
@@ -51,6 +68,5 @@ Touch.Pinchend = ()->
 Touch.offEvent = (element)->
   touch.on(element, 'drag dragend')
 
+module.exports = Touch
 
-
-module.exports = Touch;
