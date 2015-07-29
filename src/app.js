@@ -24,7 +24,6 @@ function renderNextPage(data, PageIndex){
 
 var data = require('./lib/js/data');
 var PageIndex = 3;
-
 renderNextPage(data, PageIndex);
 
 
