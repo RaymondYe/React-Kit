@@ -12,9 +12,10 @@ OPT.edit = 'edited'
 Touch.bindBodyEvent = ()->
   _this = this
 
+  # Bind Component Tap Event
   touch.on 'body', 'tap', (ev)->
     target = ev.target
-
+    debugger
     if utils.parentUntil(target, 'opt')
       return
     if not utils.parentUntil(target, OPT.com)

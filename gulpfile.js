@@ -20,6 +20,7 @@ var browserSync;
 
 // The default task
 gulp.task('default', ['sync', 'build:watch']);
+gulp.task('release', ['sync', 'build:watch']);
 
 // Clean output directory
 gulp.task('clean', function(cb) {

@@ -1,22 +1,45 @@
+#Start
+$ npm install
+$ gulp
+
+# Release
+$ gulp build --release
+
+# Webpack
+$ webpack-dev-server --devtool eval --progress --colors --hot --content-base build
+
+package.json
+```js
+"scripts": {
+    "build": "webpack",
+    "dev": "webpack-dev-server --devtool eval --progress --colors --hot --content-base build"
+  }
+```
+- webpack-dev-server - 在 localhost:8080 建立一个 Web 服务器
+- --devtool eval - 为你的代码创建源地址。当有任何报错的时候可以让你更加精确地定位到文件和行号
+- --progress - 显示合并代码进度
+- --colors - Yay，命令行中显示颜色！
+- --content-base build - 指向设置的输出目录
+
 #目录结构
 ---------
-- build  编译后发布用代码
-- node_modules  node 库
-- gulpfile.js  Gulp 配置文件
-- package.json  依赖包配置文件
-- webpack.config  webpack 配置文件
-- src  dev 源码
-  - components  React 组件
-  - html  html
-  - lib  插件目录 
+- build  # 编译后发布用代码
+- node_modules  # node库
+- gulpfile.js  # Gulp配置文件
+- package.json  # 依赖包配置文件
+- webpack.config  # webpack配置文件
+- README.md  # 文档说明
+- src  # dev源码
+  - components  # React组件
+  - html  # html
+  - lib  # 插件目录 
     - js
     - css
-  - public  静态资源
+  - public  # 静态资源
    - img
-  - style  less,css
+  - style  less, css
   - utils  Utility classes and functions
   - app.js  Client-side startup script
-
 
 ##JsModule
 ###Base
@@ -64,36 +87,5 @@ Bootstrap部分模块引入
 - css sprite, cssAutoprefix, 压缩, 合并
 - image Min
 - md5, minhtml, uploadToCdn
-
-
-
----
-
-#React
-
-##操作数据流程
-1. gitInitialState() 初始化数据
-2. render() 渲染初始化数据
-3. componentDidMount() 异步获取数据
-4. setState() 更新数据
-
-
-- render()
-  返回的是一系列嵌套的组件
-- this.props 
-  获取父组件传递给子组件的数据
-- this.setState({data: data})
-  用于动态更新状态，设置数据（设置后UI会自动刷新）
-- getInitialState()
-  在整个组件的生命周期中只会执行一次，用于初始化数据
-- componentDidMount 会在 render
-  后自动调用，用于异步获取数据，更新数据
-
-
-
-
-
-
-
 
 

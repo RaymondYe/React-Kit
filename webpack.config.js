@@ -2,8 +2,18 @@ var webpack = require('webpack');
 var commonsPlugin = new webpack.optimize.CommonsChunkPlugin('common.js');
 var ExtractTextPlugin = require('extract-text-webpack-plugin');
 var autoprefixer = require('autoprefixer-core');
+var minimist = require('minimist');
+var path = require('path');
+var node_modules = path.resolve(__dirname, 'node_modules');
+var pathToReact = path.resolve(node_modules, 'react/dist/react.min.js');
 
-const DEBUG = true;
+const argv = minimist(process.argv.slice(2));
+const DEBUG = !argv.release;
+const GLOBALS = {
+  'process.env.NODE_ENV': DEBUG ? '"development"' : '"production"',
+  '__DEV__': DEBUG
+};
+
 const AUTOPREFIXER_BROWSERS = [
   'Android 2.3',
   'Android >= 4',
@@ -13,6 +23,11 @@ const AUTOPREFIXER_BROWSERS = [
   'iOS >= 6',
   'Opera >= 12',
   'Safari >= 6'
+];
+
+const releaseConfig = DEBUG ? [] : [
+      new webpack.optimize.UglifyJsPlugin(),
+      new webpack.optimize.AggressiveMergingPlugin()
 ];
 
 const config = {
@@ -51,11 +66,11 @@ const config = {
     }, {
       test: /\.coffee$/,
       loader: 'coffee'
-    }, { test: /\.cjsx$/, loader: "coffee-jsx-loader" }]
+    }, { test: /\.cjsx$/, loader: "coffee-jsx-loader" }],
+    noParse: [pathToReact]
   },
   entry: './src/app.js', //演示单入口文件
   output: {
-    publicPath: './', // 引用你的文件时考虑使用的地址
     sourcePrefix: '  ',
     path: './build/public', //指向 Webpack 编译能的资源位置
     filename: 'app.js' //打包后的名字
@@ -71,17 +86,13 @@ const config = {
 
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin(),
-    new ExtractTextPlugin('app.bundle.css'),
-  ],
-  devtool: 'source-map',
+  ].concat(releaseConfig),
+  devtool: DEBUG ? 'source-map' : false,
 //'eval-source-map'
   postcss: [autoprefixer(AUTOPREFIXER_BROWSERS)]
 };
 
 
-// new webpack.optimize.DedupePlugin(),
-// new webpack.optimize.UglifyJsPlugin(),
-// new webpack.optimize.AggressiveMergingPlugin()
 
 
 module.exports = config;

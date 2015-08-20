@@ -15,7 +15,7 @@ function renderNextPage(data, PageIndex){
     bgcol = {data.data.pages[PageIndex].bgcol}
     data = {data.data.pages[PageIndex]}
     name = {data.data.name}
-    showTitle = {false}/>,
+    showTitle = {true}/>,
     AppElement,
     function(){
       AppElement.style.backgroundColor = data.data.pages[PageIndex].bgcol;});
@@ -23,10 +23,9 @@ function renderNextPage(data, PageIndex){
 }
 
 var data = require('./lib/js/data');
-var PageIndex = 3;
+var PageIndex = 4;
+
 renderNextPage(data, PageIndex);
-
-
 
 
 

@@ -10,10 +10,10 @@
     "flux": "2.0.3",
     "lodash": "3.9.3",
     "normalize.css": "3.0.3",
-    "react": "0.13.3",
-    "source-map-support": "0.3.1"
+    "react": "0.13.3"
   },
   "devDependencies": {
+    "source-map-support": "0.3.1",
     "autoprefixer-core": "^5.2.0",
     "browser-sync": "^2.7.7",
     "coffee-jsx-loader": "^0.1.2",
@@ -46,6 +46,6 @@
   "scripts": {
     "build": "gulp build",
     "serve": "gulp serve",
-    "sync": "gulp sync"
+    "dev": "webpack-dev-server --devtool eval --progress --colors --hot --content-base build"
   }
 }

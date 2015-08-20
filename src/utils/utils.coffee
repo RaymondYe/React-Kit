@@ -34,7 +34,6 @@ utils.delHtmlTag = (str)->
 
 #遍历父元素 存在 className true
 utils.parentUntil = (el, className)->
-
   while(el.parentNode)
     if el.className.indexOf(className) >= 0
       return true
@@ -42,6 +41,7 @@ utils.parentUntil = (el, className)->
       el = el.parentNode
       if not el
         return false
+
 module.exports = utils
 
 
