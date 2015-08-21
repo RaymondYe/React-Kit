@@ -1,9 +1,10 @@
 #Start
 $ npm install
-$ gulp
+$ npm run start
+> npm run start -- release
 
 # Release
-$ gulp build --release
+$ run build --release
 
 # Webpack
 $ webpack-dev-server --devtool eval --progress --colors --hot --content-base build

@@ -21,7 +21,6 @@ FontModalComponent = React.createClass
     if @.props.clickCb
       @.props.clickCb()
   render: ->
-    debugger
     <div className="modal-font">
       <input type="text" value={@.state.value} className="inp" onChange={@.handleChange}/>
       <div className="modal-row">

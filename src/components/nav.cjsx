@@ -15,14 +15,14 @@ NavComponent = React.createClass
     },
   getInitialState: ()->
     return {
-      isModalOpen:false,
+      isModalOpen: false,
       modalMain: '',
     }
 
   openModal: ()->
-    @.setState({ isModalOpen:true })
+    @.setState({ isModalOpen: true })
   closeModal:()->
-    @.setState({ isModalOpen:false })
+    @.setState({ isModalOpen: false })
 
   createFont: ()->
     @.state.modalMain = (
@@ -35,10 +35,10 @@ NavComponent = React.createClass
   render: ->
     <div>
     <ul className="nav">
-      <li onTouchStart={@.createFont}>文字</li>
-      <li>图片</li>
-      <li>按钮</li>
-      <li>表单</li>
+      <li onTouchStart={@.createFont}>Text</li>
+      <li>Image</li>
+      <li>Button</li>
+      <li>Form</li>
     </ul>
     <ModalComponent
     isOpen={@.state.isModalOpen}
