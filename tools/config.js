@@ -79,7 +79,6 @@ const config = {
     }, {
       test: /\.jsx?$/,
       include: [
-        path.resolve(__dirname, '../node_modules/react-routing/src'),
         path.resolve(__dirname, '../src')
       ],
       loaders: [...(WATCH ? ['react-hot'] : []), 'babel-loader']
@@ -89,7 +88,6 @@ const config = {
     }, {
       test: /\.cjsx$/,
       include: [
-        path.resolve(__dirname, '../node_modules/react-routing/src'),
         path.resolve(__dirname, '../src')
       ],
       loader: 'react-hot!coffee-jsx-loader'
