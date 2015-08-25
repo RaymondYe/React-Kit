@@ -1,31 +1,20 @@
-require('fastclick')
-require('./style/global.less')
-
+var FastClick = require('fastclick')
 var React = require('react');
-var PageComponent = require('./components/page');
+var App = require('./components/app');
 
 React.initializeTouchEvents(true);
 
-function renderNextPage(data, PageIndex){
-
-  var AppElement = document.getElementById('app');
-
-  React.render(
-    <PageComponent
-    bgcol = {data.data.pages[PageIndex].bgcol}
-    data = {data.data.pages[PageIndex]}
-    name = {data.data.name}
-    showTitle = {true}/>,
-    AppElement,
-    function(){
-      AppElement.style.backgroundColor = data.data.pages[PageIndex].bgcol;});
-
-}
-
 var data = require('./lib/js/data');
 var PageIndex = 4;
+var AppElement = document.getElementById('app');
+var bg = data.data.pages[PageIndex].bgcol;
 
-renderNextPage(data, PageIndex);
+React.render(
+    <App data={data}/>,
+    AppElement,
+    function(){
+      AppElement.style.backgroundColor = bg;
+    }
+);
 
-
-
+// FastClick.attach(document.body);
