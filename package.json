@@ -1,4 +1,7 @@
 {
+  "name": "Reate-Kit",
+  "version": "0.1.0",
+  "author": "Raymond-Yip",
   "private": true,
   "engines": {
     "node": ">= 0.10",
