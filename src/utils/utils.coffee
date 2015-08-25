@@ -43,5 +43,3 @@ utils.parentUntil = (el, className)->
         return false
 
 module.exports = utils
-
-

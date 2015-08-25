@@ -1,5 +1,5 @@
 touch = require('../lib/js/touch')
-utils = require("../utils/utils")
+utils = require("./utils")
 
 Touch = {}
 
