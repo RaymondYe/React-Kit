@@ -17,7 +17,7 @@ const App = React.createClass({
       name = {this.state.name}
       showTitle = {false}/>
     }
-    return (<div className='App-box' ref='APP'>
+    return (<div className='App-box' ref='APP' {...this.props}>
       {PAGECOMPONENT}
       <NavComponent />
     </div>

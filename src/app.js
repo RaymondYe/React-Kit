@@ -1,8 +1,7 @@
 import 'babel/polyfill';
 import FastClick from 'fastclick';
 import React from 'react';
-import zepto from './lib/js/zepto.js';
-import _ from 'lodash';
+import $ from './lib/js/zepto.js';
 import APP from './components/app';
 
 React.initializeTouchEvents(true);

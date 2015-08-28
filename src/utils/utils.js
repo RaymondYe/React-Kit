@@ -37,7 +37,7 @@ utils.delHtmlTag = function(str){
 
   let result = '';
 
-  if(_.isString(str)){
+  if(str){
     result = str.replace(/<[^>]+>/g, '');
   }
 

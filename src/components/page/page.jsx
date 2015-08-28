@@ -33,7 +33,9 @@ const Page = React.createClass({
     }
 
     if (this.state.opt) {
-      opt = <OptComponent optDom={this.state.optDom} type={this.state.optType}/>;
+      opt = <OptComponent
+        optDom={this.state.optDom}
+        type={this.state.optType}/>;
     }
 
     return (<div className="page" style={{backgroundColor:this.props.bgcol}}>

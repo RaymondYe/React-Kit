@@ -9,7 +9,8 @@ OPT.com = 'j-component';
 OPT.edit = 'edited';
 
 Touch.bindBodyEvent = function(){
-  const _this = this
+  const _this = this;
+
   //Bind Component Tap Event
   touch.on('body', 'tap', (ev)=>{
     let target = ev.target;
@@ -45,11 +46,11 @@ Touch.tapEvent = function(el, dom){
 }
 
 Touch.componentDidMount = function(){
-  this.tapEvent(this.getDOMNode(), this)
+  this.tapEvent(this.getDOMNode(), this);
 };
 
 Touch.componentWillUnmount = function(){
-  this.offEvent(this.getDOMNode)
+  this.offEvent(this.getDOMNode);
 };
 
 Touch.touchPinchend = function(currentScale){

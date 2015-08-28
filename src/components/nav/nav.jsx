@@ -33,7 +33,7 @@ const Nav = React.createClass({
     return <div>
       <ul className="nav">
         <li onTouchStart={this.createFont}>Text</li>
-        <li>Image</li>
+        <li>Image11</li>
         <li>Button</li>
         <li onTouchStart={this.nextPage}>Next</li>
       </ul>
