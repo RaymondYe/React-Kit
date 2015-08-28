@@ -53,6 +53,7 @@ const config = {
   ],
   //后缀名的自动补全
   resolve: {
+    root: [],
     extensions: ['', '.webpack.js', '.web.js', '.js', '.jsx', '.coffee', '.cjsx']
   },
   // 配置loader
@@ -66,22 +67,22 @@ const config = {
       loader: 'style!css!postcss-loader!less'
     }, {
       test: /\.gif/,
-      loader: 'url-loader?limit=10000&mimetype=image/gif'
+      loader: 'url?limit=10000&mimetype=image/gif'
     }, {
       test: /\.jpg/,
-      loader: 'url-loader?limit=10000&mimetype=image/jpg'
+      loader: 'url?limit=10000&mimetype=image/jpg'
     }, {
       test: /\.png/,
-      loader: 'url-loader?limit=10000&mimetype=image/png'
+      loader: 'url?limit=10000&mimetype=image/png'
     }, {
       test: /\.svg/,
-      loader: 'url-loader?limit=10000&mimetype=image/svg+xml'
+      loader: 'url?limit=10000&mimetype=image/svg+xml'
     }, {
       test: /\.jsx?$/,
       include: [
         path.resolve(__dirname, '../src')
       ],
-      loaders: [...(WATCH ? ['react-hot'] : []), 'babel-loader']
+      loaders: [...(WATCH ? ['react-hot'] : []), 'babel']
     }, {
       test: /\.coffee$/,
       loader: 'coffee'
@@ -90,10 +91,9 @@ const config = {
       include: [
         path.resolve(__dirname, '../src')
       ],
-      loader: 'react-hot!coffee-jsx-loader'
+      loader: 'react-hot!coffee-jsx'
     }]
   },
-
   postcss: [
     require('postcss-nested')(),
     require('cssnext')(),
@@ -110,12 +110,14 @@ const appConfig = merge({}, config, {
     'webpack/hot/dev-server',
     'webpack-hot-middleware/client'] : []),
     './src/app.js'
-  ],//演示单入口文件
+  ],
+  //指向 Webpack 编译能的资源位置
   output: {
-    path: path.join(__dirname, '../build/public'),//指向 Webpack 编译能的资源位置
+    path: path.join(__dirname, '../build/public'),
     filename: 'app.js'
   },
   devtool: DEBUG ? 'source-map' : false,
+
   plugins: [
     ...config.plugins,
     new DefinePlugin(merge({}, GLOBALS, {'__SERVER__': false})),

@@ -2,5 +2,5 @@
   "name": "image",
   "version": "0.0.0",
   "private": true,
-  "main": "./image.cjsx"
+  "main": "./image.jsx"
 }

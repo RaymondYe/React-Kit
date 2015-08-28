@@ -1,20 +1,16 @@
-var FastClick = require('fastclick')
-var React = require('react');
-var App = require('./components/app');
+import 'babel/polyfill';
+import FastClick from 'fastclick';
+import React from 'react';
+import zepto from './lib/js/zepto.js';
+import _ from 'lodash';
+import APP from './components/app';
 
 React.initializeTouchEvents(true);
 
-var data = require('./lib/js/data');
-var PageIndex = 4;
-var AppElement = document.getElementById('app');
-var bg = data.data.pages[PageIndex].bgcol;
+const AppElement = document.getElementById('app');
 
+// Render App Components
 React.render(
-    <App data={data}/>,
-    AppElement,
-    function(){
-      AppElement.style.backgroundColor = bg;
-    }
+    <APP/>,
+    AppElement
 );
-
-// FastClick.attach(document.body);

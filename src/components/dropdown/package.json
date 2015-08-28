@@ -2,5 +2,5 @@
   "name": "dropdown",
   "version": "0.0.0",
   "private": true,
-  "main": "./dropdown.cjsx"
+  "main": "./dropdown.jsx"
 }

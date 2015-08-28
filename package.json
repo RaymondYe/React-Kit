@@ -4,8 +4,8 @@
   "author": "Raymond-Yip",
   "private": true,
   "engines": {
-    "node": ">= 0.10",
-    "npm": ">= 2.1"
+    "node": ">= 0.12.3",
+    "npm": ">= 2.9.1"
   },
   "dependencies": {
     "babel": "5.8.21",
@@ -29,6 +29,7 @@
     "del": "^1.2.0",
     "extract-text-webpack-plugin": "^0.8.2",
     "gaze": "^0.5.1",
+    "jest-cli": "^0.4.18",
     "less": "^2.5.1",
     "less-loader": "^2.2.0",
     "minimist": "^1.1.1",
@@ -47,6 +48,13 @@
     "webpack-dev-middleware": "^1.2.0",
     "webpack-dev-server": "^1.10.1",
     "webpack-hot-middleware": "^1.2.0"
+  },
+  "jest": {
+    "rootDir": "./src",
+    "scriptPreprocessor": "../preprocessor.js",
+    "unmockedModulePathPatterns": [
+      "react"
+    ]
   },
   "scripts": {
     "clean": "babel-node --eval \"require('./tools/clean')().catch(err => console.log(err.stack))\"",

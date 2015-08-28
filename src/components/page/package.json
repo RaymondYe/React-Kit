@@ -2,5 +2,5 @@
   "name": "page",
   "version": "0.0.0",
   "private": true,
-  "main": "page.cjsx"
+  "main": "page.jsx"
 }
