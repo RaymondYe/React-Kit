@@ -6,6 +6,21 @@ import utils from '../../utils/utils';
 
 const Nav = React.createClass({
   displayName: 'Nav',
+  render: function(){
+    return <div>
+      <ul className="nav">
+        <li onTouchStart={this.createFont}>Text</li>
+        <li>Image</li>
+        <li onTouchStart={this.props.prevPage}>Prev</li>
+        <li onTouchStart={this.props.nextPage}>Next</li>
+      </ul>
+      <ModalComponent
+      isOpen={this.state.isModalOpen}
+      transitionName="modal-anim">
+      {this.state.modalMain}
+      </ModalComponent>
+    </div>
+  },
   getInitialState: function(){
     return {
       isModalOpen: false,
@@ -28,21 +43,6 @@ const Nav = React.createClass({
       <button onClick={this.closeModal} className="btn btn-danger">取消</button>
       </FontModalComponent>);
     this.openModal();
-  },
-  render: function(){
-    return <div>
-      <ul className="nav">
-        <li onTouchStart={this.createFont}>Text</li>
-        <li>Image11</li>
-        <li>Button</li>
-        <li onTouchStart={this.nextPage}>Next</li>
-      </ul>
-      <ModalComponent
-      isOpen={this.state.isModalOpen}
-      transitionName="modal-anim">
-      {this.state.modalMain}
-      </ModalComponent>
-    </div>
   }
 });
 

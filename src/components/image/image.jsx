@@ -14,7 +14,7 @@ const Image = React.createClass({
       <img
       src={this.props.url}
       className={this.state.cls.join(' ')}
-      style={this.state.style}/>
+      style={this.props.style}/>
     );
   },
   getDefaultProps: function(){
@@ -22,7 +22,6 @@ const Image = React.createClass({
   },
   getInitialState: function(){
     return {
-      style: this.props.style,
       cls: ['image', 'j-component']
     }
   }

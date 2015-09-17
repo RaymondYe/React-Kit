@@ -14,17 +14,25 @@ const Page = React.createClass({
     showTitle: PropTypes.boolean
   },
   render: function(){
-    utils.page = this;
 
+    utils.page = this;
     let components = [];
     let title = '';
     let opt = '';
+    let commonProps = null;
 
-    this.state.cmps.map(cmp=>{
+    this.props.data.cmps.map((cmp, i)=>{
+      
+      commonProps = {
+        setStyle: this.props.setStyle,
+        cid: i,
+        style: cmp.style
+      };
+
       if (cmp.cmpType == 'image') {
-        components.push(<ImageComponent url={cmp.file.key} style={cmp.style} />);
+        components.push(<ImageComponent url={cmp.file.key} {...commonProps} />);
       } else {
-        components.push(<FontComponent style={cmp.style}>{cmp.text}</FontComponent>);
+        components.push(<FontComponent {...commonProps}>{cmp.text}</FontComponent>);
       }
     });
 
@@ -35,10 +43,10 @@ const Page = React.createClass({
     if (this.state.opt) {
       opt = <OptComponent
         optDom={this.state.optDom}
-        type={this.state.optType}/>;
+        type={this.state.optType} />;
     }
 
-    return (<div className="page" style={{backgroundColor:this.props.bgcol}}>
+    return (<div className="page" style={{backgroundColor: this.props.bgcol}}>
       {components}
       {opt}
     </div>
@@ -47,7 +55,6 @@ const Page = React.createClass({
   },
   getInitialState: function(){
     return {
-      cmps: this.props.data.cmps,
       opt: false
     }
   }

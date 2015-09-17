@@ -13,8 +13,8 @@ const Font = React.createClass({
     return (
       <div
         className = {this.state.cls.join(' ')}
-        style = {this.state.style}
-        dangerouslySetInnerHTML = {{__html:this.state.children}}>
+        style = {this.props.style}
+        dangerouslySetInnerHTML = {{__html: this.props.children}}>
       </div>
     );
   },
@@ -23,9 +23,7 @@ const Font = React.createClass({
   },
   getInitialState: function(){
     return {
-      style: this.props.style,
       cls: ['font', 'j-component'],
-      children: this.props.children
     }
   }
 });
