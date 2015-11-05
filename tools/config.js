@@ -22,10 +22,6 @@ const GLOBALS = {
   '__DEV__': DEBUG
 };
 
-//
-// Common configuration chunk to be used for both
-// client-side (app.js) and server-side (server.js) bundles
-// -----------------------------------------------------------------------------
 
 const config = {
   output: {
@@ -51,13 +47,12 @@ const config = {
   plugins: [
     new webpack.optimize.OccurenceOrderPlugin()
   ],
-  //后缀名的自动补全
+
   resolve: {
     root: [],
     extensions: ['', '.webpack.js', '.web.js', '.js', '.jsx', '.coffee', '.cjsx']
   },
-  // 配置loader
-  // 用 ! 来连接多个人 loader
+
   module: {
     loaders: [{
       test: /\.txt/,
@@ -101,17 +96,20 @@ const config = {
   ]
 };
 
-//
-// Configuration for the client-side bundle (app.js)
-// -----------------------------------------------------------------------------
 
+// Plugins Extract Css
+// config.plugins push new ExtractTextPlugin("[name].css")
+// Chnage Css Loader
+// loader: ExtractTextPlugin.extract("style-loader", "css-loader!less-loader")
+// loader: ExtractTextPlugin.extract("style-loader", "css-loader")
+
+// Configuration for the client-side bundle (app.js)
 const appConfig = merge({}, config, {
   entry: [...(WATCH ? [
     'webpack/hot/dev-server',
     'webpack-hot-middleware/client'] : []),
     './src/app.js'
   ],
-  //指向 Webpack 编译能的资源位置
   output: {
     path: path.join(__dirname, '../build/public'),
     filename: 'app.js'

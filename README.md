@@ -6,11 +6,11 @@ $ npm start     # Compile and launch
 
 ###How to Build
 $ run run build
-> npm run build -- release
+> npm run build release
 
 ###How to Run
 $ npm start
-> npm start -- release
+> npm start release
 
 ###Directory Layout
 ---------
