@@ -4,14 +4,15 @@ import webpackDevMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 
 global.WATCH = true;
-const config = require('./config')[0]; // Client-side bundle configuration
-const bundler = webpack(config);
+const webpackConfig = require('./webpack.config')[0];
+const bundler = webpack(webpackConfig);
 
 /**
  * Launches a development web server with "live reload" functionality -
  * synchronizing URLs, interactions and code changes across multiple devices.
  */
-export default async () => {
+
+async function start() {
 
   await require('./build')();
   const defaultPath = "./build/html";
@@ -19,6 +20,7 @@ export default async () => {
     '/app.js': './build/public/app.js',
     '/img':'./build/public/img'
   };
+
   browserSync({
     server: {
       baseDir: defaultPath,
@@ -27,10 +29,10 @@ export default async () => {
         webpackDevMiddleware(bundler, {
           // IMPORTANT: dev middleware can't access config, so we should
           // provide publicPath by ourselves
-          publicPath: config.output.publicPath,
+          publicPath: webpackConfig.output.publicPath,
 
           // pretty colored output
-          stats: config.stats,
+          stats: webpackConfig.stats,
 
           hot: true,
           historyApiFallback: true
@@ -51,4 +53,6 @@ export default async () => {
       'build/public/**/*.html',
     ]
   });
-};
+}
+
+export default start;

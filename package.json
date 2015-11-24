@@ -8,7 +8,6 @@
     "npm": ">= 2.9.1"
   },
   "dependencies": {
-    "babel": "5.8.21",
     "eventemitter3": "1.1.0",
     "fastclick": "1.0.6",
     "flux": "2.0.3",
@@ -18,7 +17,9 @@
   },
   "devDependencies": {
     "autoprefixer-core": "^5.2.0",
+    "babel": "5.8.21",
     "babel-loader": "^5.3.2",
+    "bluebird": "^3.0.5",
     "browser-sync": "^2.7.7",
     "coffee-jsx-loader": "^0.1.2",
     "coffee-loader": "^0.7.2",
@@ -57,10 +58,10 @@
     ]
   },
   "scripts": {
-    "clean": "babel-node --eval \"require('./tools/clean')().catch(err => console.log(err.stack))\"",
-    "copy": "babel-node --eval \"require('./tools/copy')().catch(err => console.log(err.stack))\"",
-    "bundle": "babel-node --eval \"require('./tools/bundle')().catch(err => console.log(err.stack))\"",
-    "build": "babel-node --eval \"require('./tools/build')().catch(err => console.log(err.stack))\"",
-    "start": "babel-node --eval \"require('./tools/start')().catch(err => console.log(err.stack))\""
+    "clean": "babel-node tools/run clean",
+    "copy": "babel-node tools/run copy",
+    "bundle": "babel-node tools/run bundle",
+    "build": "babel-node tools/run build",
+    "start": "babel-node tools/run start"
   }
 }
