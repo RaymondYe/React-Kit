@@ -1,0 +1,135 @@
+## React Style Guide
+
+### Folder Structure
+
+- Place each component in a separate folder
+- Avoid having shared resources between components (css, images etc.)
+- Keep all components' folders in the same parent folder (avoid nesting)
+
+##### File structure per component example:
+
+```
+/src/components/nav/icon.svg
+/src/components/nav/nav.css
+/src/components/nav/nav.js
+/src/components/nav/package.json
+```
+
+### CSS Class Names
+
+```css
+.ComponentName { }
+.ComponentName--modifier { }
+.ComponentName-elementName { }
+.ComponentName-elementName--modifier { }
+```
+
+
+##### CSS styling example
+
+```jsx
+<nav className="nav">
+  <ul className="nav-items">
+    <li className="nav-item nav-item--selected">
+      <a className="nav-link" href="/products">Products</a>
+    </li>
+    <li className="nav-item">
+      <a className="nav-link" href="/services">Services</a>
+    </li>
+  </ul>
+</nav>
+```
+
+```less
+// CSS
+@import '../variables.css';
+
+.nav {
+  &-items {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    text-align: center;
+  }
+
+  &-item {
+    display: inline-block;
+    vertical-align: top;
+  }
+
+  &-link {
+    display: block;
+    padding: 0 25px;
+    outline: 0;
+    border: 0;
+    color: @default-color;
+    text-decoration: none;
+    line-height: 25px;
+    transition: background-color .3s ease;
+
+    &,
+    .Navigation-items:hover & {
+      background: var(--default-bg-color);
+    }
+
+    &--selected,
+    .Navigation-items:hover &:hover {
+      background: var(--active-bg-color);
+    }
+  }
+}
+```
+
+### React Components
+
+- Use [Babel](https://babeljs.io/docs/learn-es6/) 
+- Use [ES6 classes](https://facebook.github.io/react/blog/2015/01/27/react-v0.13.0-beta-1.html#es6-classes)
+
+##### React component example:
+
+```js
+import './SampleComponent.css';
+import React, { Component } from 'react';
+
+class SampleComponent extends Component {
+
+  static propTypes = { ... };
+
+  static defaultProps = { ... };
+
+  state = { ... };
+
+  constructor() {
+    super();
+    // componentWillMount handler
+  }
+
+  componentDidMount() {
+    // ...
+  }
+
+  componentWillUnmount() {
+    // ...
+  }
+
+  shouldComponentUpdate() {
+    // ...
+  }
+
+  render() {
+    return (
+      <div className="SampleComponent">
+      </div>
+    );
+  }
+
+}
+
+export default SampleComponent;
+```
+
+Put custom methods and properties between React API methods and the `render()` method at the bottom.
+
+
+
+
