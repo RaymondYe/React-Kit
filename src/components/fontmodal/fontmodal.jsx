@@ -1,12 +1,36 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes, Component } from 'react';
 import Utils from '../../utils/utils';
 
-const FontModal = React.createClass({
-  displayName: 'FontModal',
-  propsTypes: {
+export default class FontModal extends Component {
+  static propTypes = {
     value: PropTypes.string
-  },
-  render: function(){
+  };
+
+  state = {
+    value: '请输入您要添加的文字',
+    fontColor: 'fff'
+  };
+
+  handleChange = (e) => {
+    this.setState({value: e.target.value});
+  }
+
+  colorChange = (e) => {
+    this.setState({fontColor: e.target.value});
+  }
+
+  createFont = () => {
+    Utils.createFont({
+      text: this.state.value,
+      color: this.state.fontColor
+    });
+
+    if(this.props.clickCb){
+      this.props.clickCb();
+    }
+  }
+
+  render() {
     return (<div className="modal-font">
       <input type="text" value={this.state.value} className="inp" onChange={this.handleChange}/>
       <div className="modal-row">
@@ -22,29 +46,6 @@ const FontModal = React.createClass({
         {this.props.children}
       </div>
     </div>);
-  },
-  getInitialState: function(){
-    return {
-      value: '请输入您要添加的文字',
-      fontColor: 'fff'
-    };
-  },
-  handleChange: function(e){
-    this.setState({value: e.target.value});
-  },
-  colorChange: function(e){
-    this.setState({fontColor: e.target.value});
-  },
-  createFont: function(){
-    Utils.createFont({
-      text: this.state.value,
-      color: this.state.fontColor
-    });
-
-    if(this.props.clickCb){
-      this.props.clickCb();
-    }
   }
-});
 
-export default FontModal;
+};

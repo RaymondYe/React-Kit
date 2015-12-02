@@ -1,15 +1,13 @@
 import 'babel/polyfill';
-import FastClick from 'fastclick';
 import React from 'react';
-import $ from './lib/js/zepto.js';
+import ReactDom from 'react-dom';
 import APP from './components/app';
-
-React.initializeTouchEvents(true);
+import $ from './lib/js/zepto.js';
 
 const AppElement = document.getElementById('app');
 
 // Render App Components
-React.render(
-    <APP/>,
-    AppElement
+ReactDom.render(
+  <APP/>,
+  AppElement
 );

@@ -1,15 +1,21 @@
-import React, { PropTypes } from 'react';
-import Touch from '../../utils/touch';
-import styles from './font.less';
+import React, { PropTypes, Component } from 'react';
+import './font.less';
 
-const Font = React.createClass({
-  displayName: 'Font',
-  propTypes: {
-    style: PropTypes.node,
+export default class Font extends Component {
+  static propTypes = {
+    style: PropTypes.object,
     children: PropTypes.string
-  },
-  mixins: [Touch],
-  render: function(){
+  };
+
+  static defaultProps = {
+    type: 'font'
+  };
+
+  state = {
+    cls: ['font', 'j-component']
+  }
+
+  render() {
     return (
       <div
         className = {this.state.cls.join(' ')}
@@ -17,15 +23,6 @@ const Font = React.createClass({
         dangerouslySetInnerHTML = {{__html: this.props.children}}>
       </div>
     );
-  },
-  getDefaultProps: function(){
-    return {type: 'font'};
-  },
-  getInitialState: function(){
-    return {
-      cls: ['font', 'j-component'],
-    }
   }
-});
 
-export default Font;
+};

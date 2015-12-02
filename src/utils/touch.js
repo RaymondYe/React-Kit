@@ -1,4 +1,5 @@
 import touch from '../lib/js/touch';
+import ReactDom from 'react-dom';
 import utils from './utils';
 
 const Touch = {};
@@ -26,18 +27,18 @@ Touch.bindBodyEvent = function(){
 Touch.tapEvent = function(el, dom){
   const _this = this;
   touch.on(el, 'tap', (ev)=>{
-    if (OPT.curEl == dom.getDOMNode()){
+    if (OPT.curEl == ReactDom.findDOMNode(dom)){
       return
     }
     if (OPT.curEl){
       this.removeCurEvent()
     }
     if (dom.props.type == 'image'){
-      Touch.Pinchend(dom.getDOMNode(), Touch.touchPinchend)
+      Touch.Pinchend(ReactDom.findDOMNode(dom), Touch.touchPinchend)
     }
-    Touch.dragEvent(dom.getDOMNode(), _this.touchDrag);
+    Touch.dragEvent(ReactDom.findDOMNode(dom), _this.touchDrag);
     dom.setState({cls: dom.state.cls.concat(OPT.edit)});
-    OPT.curEl = dom.getDOMNode();
+    OPT.curEl = ReactDom.findDOMNode(dom);
     OPT.curDom = dom;
     utils.showOpt(dom, dom.props.type);
   });
@@ -45,12 +46,12 @@ Touch.tapEvent = function(el, dom){
 
 // Create Component Bind Dom
 Touch.componentDidMount = function(){
-  this.tapEvent(this.getDOMNode(), this);
+  this.tapEvent(ReactDom.findDOMNode(this), this);
 };
 
 // Remove Component Unbind Dom
 Touch.componentWillUnmount = function(){
-  this.offEvent(this.getDOMNode);
+  this.offEvent(ReactDom.findDOMNode(this));
 };
 
 Touch.touchPinchend = function(currentScale){

@@ -1,4 +1,4 @@
- 'use strict';
+'use strict';
 
 const utils = {};
 
@@ -22,7 +22,7 @@ utils.createFont = function(font){
   };
   const newCmps = this.page.state.cmps.concat(newFont);
   this.page.setState({cmps: newCmps});
-}
+};
 
 utils.showOpt = function(dom, type){
   this.page.setState({opt: true, optDom: dom, optType: type})

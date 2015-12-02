@@ -1,3 +1,9 @@
+### Features
+
+- Equip with React, ES6 & Babel
+- Build with Webpack
+- Support hot module replacement
+
 ###Getting Started
 $ git clone https://github.com/RaymondYe/React-Kit
 $ cd React-Kit
@@ -30,41 +36,3 @@ $ npm start
    - img
   - utils         # Utility classes and functions
   - app.js        # Client-side startup script
-
-###JsModule
-####Base
-- react
-
-####extend
-- flux
-- react-router
-- store  # localStorage Plugin
-- lodash
-- PreloadJS
-- lazyLoad
-- fastclick  # Fix Mobile Delay
-- touch  # Touch Event Plugin
-- EventEmitter https://github.com/Wolfy87/EventEmitter
-- selection  https://github.com/timdown/rangy
-- Ajax  https://github.com/ded/Reqwest
-- className  https://github.com/JedWatson/classnames
-- Bowser https://github.com/ded/bowser
-- Filesize https://github.com/avoidwork/filesize.js
-- pen https://github.com/teambition/pen
-- pdfobject https://github.com/teambition/PDFObject
-- thenjs https://github.com/teambition/then.js
-
-###CssModule
-- reset.css  # Reset Default Css
-- iconfont   # Font Image
-- animate.css
-
-###Webpack
-- babel-loader es6
-- less-loader
-- css,js 压缩,合并
-- css cssAutoprefix
-- image Min
-- md5, minhtml, uploadToCdn
-- React-Hot, LiveReload
-- Development web server for BrowserSync

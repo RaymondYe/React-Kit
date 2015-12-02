@@ -50,7 +50,7 @@ async function start() {
     // including full page reloads if HMR won't work
     files: [
       'build/public/**/*.css',
-      'build/public/**/*.html',
+      'build/html/*.html',
     ]
   });
 }

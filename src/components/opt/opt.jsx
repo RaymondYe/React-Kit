@@ -1,15 +1,52 @@
-import React, { PropTypes } from 'react';
+import React, { PropTypes, Component } from 'react';
 import Utils from '../../utils/utils';
-import styles from './opt.less';
+import './opt.less';
 
-const Opt = React.createClass({
-  displayName: 'Opt',
-  propTypes: {
+export default class Opt extends Component {
+  static propTypes = {
     url: PropTypes.string.isRequired,
     style: PropTypes.object
-  },
-  mixins: [],
-  render: function(){
+  };
+
+  static defaultProps = {
+    type: 'opt'
+  };
+
+  state = {
+    value: Utils.delHtmlTag(this.props.optDom.props.children),
+    fontColor: 'fff'
+  }
+
+  getFont = (font) => {
+    let style = '';
+    if (font.color){
+      style = `style="color:#${font.color};"`;
+    }else{
+      style = `style="color:#${this.state.fontColor};"`
+    }
+    if(!font.content){
+      font.content = this.state.value;
+    }
+    return `<font ${style}>${font.content}</font>`;
+  }
+
+  handleChange = (e) => {
+    let val = e.target.value;
+    let font = null;
+    this.setState({value: val});
+    font = this.getFont({content: val});
+    this.props.optDom.setState({children: font});
+  }
+
+  colorChange = (e) => {
+    let val = e.target.value;
+    let font = null;
+    this.setState({fontColor: val});
+    font = this.getFont({color: val});
+    this.props.optDom.setState({children: font});
+  }
+
+  render() {
     return (
       <div className="opt">
         <input type="text" value={this.state.value} className="inp" onChange={this.handleChange}/>
@@ -24,43 +61,6 @@ const Opt = React.createClass({
         </div>
       </div>
     );
-  },
-  getDefaultProps: function(){
-    return {type: 'opt'};
-  },
-  getInitialState: function(){
-    return {
-      value: Utils.delHtmlTag(this.props.optDom.props.children),
-      fontColor:'fff'
-    }
-  },
-  getFont: function(font){
-    let style = '';
-    if (font.color){
-      style = `style="color:#${font.color};"`;
-    }else{
-      style = `style="color:#${this.state.fontColor};"`
-    }
-    if(!font.content){
-      font.content = this.state.value;
-    }
-    return `<font ${style}>${font.content}</font>`;
-  },
-  handleChange: function(e){
-    let val = e.target.value;
-    let font = null;
-    this.setState({value: val});
-    font = this.getFont({content: val});
-    this.props.optDom.setState({children: font});
-  },
-  colorChange: function(e){
-    let val = e.target.value;
-    let font = null;
-    this.setState({fontColor: val});
-    font = this.getFont({color: val});
-    this.props.optDom.setState({children: font});
   }
+};
 
-});
-
-export default Opt;

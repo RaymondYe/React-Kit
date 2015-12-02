@@ -5,6 +5,7 @@ import merge from 'lodash/object/merge';
 const DEBUG = !process.argv.includes('release');
 const WATCH = global.WATCH === undefined ? false : global.WATCH;
 const VERBOSE = process.argv.includes('verbose');
+
 const STYLE_LOADER = 'style-loader/useable';
 const CSS_LOADER = DEBUG ? 'css-loader' : 'css-loader?minimize';
 const AUTOPREFIXER_BROWSERS = [
@@ -17,6 +18,7 @@ const AUTOPREFIXER_BROWSERS = [
   'Opera >= 12',
   'Safari >= 6'
 ];
+
 const GLOBALS = {
   'process.env.NODE_ENV': DEBUG ? '"development"' : '"production"',
   '__DEV__': DEBUG
@@ -55,9 +57,6 @@ const config = {
 
   module: {
     loaders: [{
-      test: /\.txt/,
-      loader: 'file?name=[path][name].[ext]'
-    }, {
       test: /\.less$/,
       loader: 'style!css!postcss-loader!less'
     }, {
@@ -78,16 +77,10 @@ const config = {
         path.resolve(__dirname, '../src')
       ],
       loaders: [...(WATCH ? ['react-hot'] : []), 'babel']
-    }, {
-      test: /\.coffee$/,
-      loader: 'coffee'
-    }, {
-      test: /\.cjsx$/,
-      include: [
-        path.resolve(__dirname, '../src')
-      ],
-      loader: 'react-hot!coffee-jsx'
-    }]
+    },{
+      test: /\.js$/,
+      exclude: /node_modules/,
+      loader: "babel"}]
   },
   postcss: [
     require('postcss-nested')(),
@@ -105,17 +98,17 @@ const config = {
 
 // Configuration for the client-side bundle (app.js)
 const appConfig = merge({}, config, {
-  entry: [...(WATCH ? [
-    'webpack/hot/dev-server',
-    'webpack-hot-middleware/client'] : []),
-    './src/app.js'
-  ],
+  entry: {
+    app: [
+      ...(WATCH ? ['webpack/hot/dev-server', 'webpack-hot-middleware/client'] : []),
+      './src/app.js',
+    ],
+  },
   output: {
     path: path.join(__dirname, '../build/public'),
-    filename: 'app.js'
+    filename: DEBUG ? '[name].js' : '[name].[hash].js'
   },
-  devtool: DEBUG ? 'source-map' : false,
-
+  devtool: DEBUG ? 'cheap-module-eval-source-map' : false,
   plugins: [
     ...config.plugins,
     new DefinePlugin(merge({}, GLOBALS, {'__SERVER__': false})),
@@ -128,13 +121,7 @@ const appConfig = merge({}, config, {
       new webpack.HotModuleReplacementPlugin(),
       new webpack.NoErrorsPlugin()
     ] : [])
-  ],
-  module: {
-    loaders: [...config.module.loaders, {
-      test: /\.css$/,
-      loader: `${STYLE_LOADER}!${CSS_LOADER}!postcss-loader`
-    }]
-  }
+  ]
 });
 
 export default [appConfig];

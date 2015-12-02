@@ -88,11 +88,10 @@
 ##### React component example:
 
 ```js
+import React, { PropTypes, Component } from 'react';
 import './SampleComponent.css';
-import React, { Component } from 'react';
 
-class SampleComponent extends Component {
-
+export default class SampleComponent extends Component {
   static propTypes = { ... };
 
   static defaultProps = { ... };
@@ -115,6 +114,14 @@ class SampleComponent extends Component {
   shouldComponentUpdate() {
     // ...
   }
+  
+  someMethods() {
+    // ...
+  }
+  
+  extraMethosd = (e) => {
+    // ...
+  }
 
   render() {
     return (
@@ -123,13 +130,29 @@ class SampleComponent extends Component {
     );
   }
 
-}
-
-export default SampleComponent;
+};
 ```
 
-Put custom methods and properties between React API methods and the `render()` method at the bottom.
+> Put custom methods and properties between React API methods and the `render()` method at the bottom.
 
+#### Dynamic Children
+```js
+var ListItemWrapper = React.createClass({
+  render: function() {
+    return <li>{this.props.data.text}</li>;
+  }
+});
 
-
+var MyComponent = React.createClass({
+  render: function() {
+    return (
+      <ul>
+        {this.props.results.map(function(result) {
+           return <ListItemWrapper key={result.id} data={result}/>;
+        })}
+      </ul>
+    );
+  }
+});
+```
 
