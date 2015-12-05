@@ -63,4 +63,3 @@ export default class Opt extends Component {
     );
   }
 };
-

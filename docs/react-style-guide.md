@@ -9,10 +9,10 @@
 ##### File structure per component example:
 
 ```
-/src/components/nav/icon.svg
-/src/components/nav/nav.css
-/src/components/nav/nav.js
 /src/components/nav/package.json
+/src/components/nav/nav.js
+/src/components/nav/nav.css
+/src/components/nav/icon.svg
 ```
 
 ### CSS Class Names
@@ -24,10 +24,9 @@
 .ComponentName-elementName--modifier { }
 ```
 
-
 ##### CSS styling example
 
-```jsx
+```html
 <nav className="nav">
   <ul className="nav-items">
     <li className="nav-item nav-item--selected">
@@ -82,9 +81,8 @@
 
 ### React Components
 
-- Use [Babel](https://babeljs.io/docs/learn-es6/) 
-- Use [ES6 classes](https://facebook.github.io/react/blog/2015/01/27/react-v0.13.0-beta-1.html#es6-classes)
-
+- Use [Babel](https://babeljs.io/docs/learn-es6/)
+- Use [ES6 classes](http://babeljs.io/blog/2015/06/07/react-on-es6-plus/
 ##### React component example:
 
 ```js
@@ -114,11 +112,11 @@ export default class SampleComponent extends Component {
   shouldComponentUpdate() {
     // ...
   }
-  
+
   someMethods() {
     // ...
   }
-  
+
   extraMethosd = (e) => {
     // ...
   }
@@ -155,4 +153,3 @@ var MyComponent = React.createClass({
   }
 });
 ```
-

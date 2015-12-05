@@ -24,7 +24,6 @@ const GLOBALS = {
   '__DEV__': DEBUG
 };
 
-
 const config = {
   output: {
     publicPath: '/',
@@ -88,7 +87,6 @@ const config = {
     require('autoprefixer-core')(AUTOPREFIXER_BROWSERS)
   ]
 };
-
 
 // Plugins Extract Css
 // config.plugins push new ExtractTextPlugin("[name].css")

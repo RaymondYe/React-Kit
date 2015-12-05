@@ -58,7 +58,6 @@ export default class App extends Component {
   }
 
   render(){
-
     let PAGECOMPONENT = '';
 
     if(this.state.status){
@@ -80,4 +79,3 @@ export default class App extends Component {
   }
 
 }
-

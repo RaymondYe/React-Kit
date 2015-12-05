@@ -3,17 +3,13 @@ import Promise from 'bluebird';
 import watch from './lib/watch';
 import ncp from 'ncp';
 
-/**
- * Copies static files to the
- * output (build) folder.
- */
+// Copies static files to the output (build) folder.
 async function copy() {
 
   await ncp('src/public', 'build/public');
   await ncp('src/html', 'build/html');
 
   if (global.WATCH) {
-
     const watcher = await watch('src/html/**/*.*');
 
     watcher.on('changed', async (file) => {
@@ -22,7 +18,6 @@ async function copy() {
     });
 
   }
-
 }
 
 export default copy;
