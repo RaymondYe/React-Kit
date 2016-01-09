@@ -8,4 +8,4 @@ async function clean() {
   await mkdirp('build/html');
 }
 
-export default clean;
+module.exports = clean;

@@ -10,4 +10,4 @@ async function build() {
   await run(require('./bundle'));
 }
 
-export default build;
+module.exports = build;

@@ -24,6 +24,6 @@ export default class Image extends Component{
     );
   }
 
-};
+}
 
 // <ImageComponent url style/>

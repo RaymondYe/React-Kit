@@ -8,7 +8,7 @@ export default class App extends Component {
   state = {
     pageIndex: 0,
     status: 0
-  }
+  };
 
   setStyle = (val, index) => {
     for (var prop in val) {
@@ -19,7 +19,7 @@ export default class App extends Component {
     this.setState({
       pageData: this.state.pageData
     });
-  }
+  };
 
   prevPage = (e) => {
     let nextIndex = this.state.pageIndex;
@@ -29,7 +29,7 @@ export default class App extends Component {
     this.setState({
       pageIndex: nextIndex
     });
-  }
+  };
 
   nextPage = (e) => {
     let nextIndex = this.state.pageIndex;
@@ -39,7 +39,7 @@ export default class App extends Component {
     this.setState({
       pageIndex: nextIndex
     });
-  }
+  };
 
   loadPageData(){
     let data = require('../../lib/js/data');

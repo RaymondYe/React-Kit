@@ -1,13 +1,11 @@
 import path from 'path';
 import webpack, { DefinePlugin, BannerPlugin } from 'webpack';
-import merge from 'lodash/object/merge';
+import merge from 'lodash.merge';
+// Webpack plugin that emits a json file with assets paths.
+import AssetsPlugin from 'assets-webpack-plugin';
 
-const DEBUG = !process.argv.includes('release');
-const WATCH = global.WATCH === undefined ? false : global.WATCH;
-const VERBOSE = process.argv.includes('verbose');
-
-const STYLE_LOADER = 'style-loader/useable';
-const CSS_LOADER = DEBUG ? 'css-loader' : 'css-loader?minimize';
+const DEBUG = !process.argv.includes('--release');
+const VERBOSE = process.argv.includes('--verbose');
 const AUTOPREFIXER_BROWSERS = [
   'Android 2.3',
   'Android >= 4',
@@ -18,7 +16,6 @@ const AUTOPREFIXER_BROWSERS = [
   'Opera >= 12',
   'Safari >= 6'
 ];
-
 const GLOBALS = {
   'process.env.NODE_ENV': DEBUG ? '"development"' : '"production"',
   '__DEV__': DEBUG
@@ -27,12 +24,11 @@ const GLOBALS = {
 const config = {
   output: {
     publicPath: '/',
-    sourcePrefix: '  '
+    sourcePrefix: '  ',
   },
 
   cache: DEBUG,
   debug: DEBUG,
-
   stats: {
     colors: true,
     reasons: DEBUG,
@@ -51,41 +47,41 @@ const config = {
 
   resolve: {
     root: [],
-    extensions: ['', '.webpack.js', '.web.js', '.js', '.jsx', '.coffee', '.cjsx']
+    extensions: ['', '.webpack.js', '.web.js', '.js', '.jsx', '.coffee', '.json']
   },
 
   module: {
     loaders: [{
       test: /\.less$/,
-      loader: 'style!css!postcss-loader!less'
+      loaders: [
+        'style',
+        'css-loader?' + (DEBUG ? 'sourceMap&' : 'minimize&'),
+        'postcss-loader',
+        'less',
+      ],
     }, {
-      test: /\.gif/,
-      loader: 'url?limit=10000&mimetype=image/gif'
+      test: /\.json$/,
+      loader: 'json'
     }, {
-      test: /\.jpg/,
-      loader: 'url?limit=10000&mimetype=image/jpg'
-    }, {
-      test: /\.png/,
-      loader: 'url?limit=10000&mimetype=image/png'
-    }, {
-      test: /\.svg/,
-      loader: 'url?limit=10000&mimetype=image/svg+xml'
+      test: /\.(png|jpg|jpeg|gif|svg|woff|woff2)$/,
+      loader: 'url?limit=10000'
     }, {
       test: /\.jsx?$/,
       include: [
-        path.resolve(__dirname, '../src')
+        path.resolve(__dirname, '../src'),
       ],
-      loaders: [...(WATCH ? ['react-hot'] : []), 'babel']
-    },{
-      test: /\.js$/,
-      exclude: /node_modules/,
-      loader: "babel"}]
+      loader: 'babel-loader',
+    }],
   },
-  postcss: [
-    require('postcss-nested')(),
-    require('cssnext')(),
-    require('autoprefixer-core')(AUTOPREFIXER_BROWSERS)
-  ]
+
+  postcss: function plugins(bundler){
+    return [
+      require('postcss-import')({addDependencyTo: bundler}),
+      require('precss')(),
+      require('autoprefixer')({ browsers: AUTOPREFIXER_BROWSERS })
+    ];
+  },
+
 };
 
 // Plugins Extract Css
@@ -97,10 +93,7 @@ const config = {
 // Configuration for the client-side bundle (app.js)
 const appConfig = merge({}, config, {
   entry: {
-    app: [
-      ...(WATCH ? ['webpack/hot/dev-server', 'webpack-hot-middleware/client'] : []),
-      './src/app.js',
-    ],
+    app: './src/app.js'
   },
   output: {
     path: path.join(__dirname, '../build/public'),
@@ -108,17 +101,22 @@ const appConfig = merge({}, config, {
   },
   devtool: DEBUG ? 'cheap-module-eval-source-map' : false,
   plugins: [
-    ...config.plugins,
-    new DefinePlugin(merge({}, GLOBALS, {'__SERVER__': false})),
+    new DefinePlugin(GLOBALS),
+    new AssetsPlugin({
+      path: path.join(__dirname, '../build'),
+      filename: 'assets.js',
+      prettyPrint: true,
+      processOutput: x => `module.exports = ${JSON.stringify(x)};`,
+    }),
     ...(DEBUG ? [] : [
       new webpack.optimize.DedupePlugin(),
-      new webpack.optimize.UglifyJsPlugin({compress: {warnings: VERBOSE}}),
+      new webpack.optimize.UglifyJsPlugin({
+        compress: {
+          warnings: VERBOSE
+        }
+      }),
       new webpack.optimize.AggressiveMergingPlugin()
-    ]),
-    ...(WATCH ? [
-      new webpack.HotModuleReplacementPlugin(),
-      new webpack.NoErrorsPlugin()
-    ] : [])
+    ])
   ]
 });
 

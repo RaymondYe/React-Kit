@@ -13,11 +13,11 @@ export default class FontModal extends Component {
 
   handleChange = (e) => {
     this.setState({value: e.target.value});
-  }
+  };
 
   colorChange = (e) => {
     this.setState({fontColor: e.target.value});
-  }
+  };
 
   createFont = () => {
     Utils.createFont({
@@ -28,7 +28,7 @@ export default class FontModal extends Component {
     if(this.props.clickCb){
       this.props.clickCb();
     }
-  }
+  };
 
   render() {
     return (<div className="modal-font">

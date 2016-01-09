@@ -13,7 +13,7 @@ export default class Font extends Component {
 
   state = {
     cls: ['font', 'j-component']
-  }
+  };
 
   render() {
     return (

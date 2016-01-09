@@ -15,7 +15,7 @@ export default class Opt extends Component {
   state = {
     value: Utils.delHtmlTag(this.props.optDom.props.children),
     fontColor: 'fff'
-  }
+  };
 
   getFont = (font) => {
     let style = '';
@@ -28,7 +28,7 @@ export default class Opt extends Component {
       font.content = this.state.value;
     }
     return `<font ${style}>${font.content}</font>`;
-  }
+  };
 
   handleChange = (e) => {
     let val = e.target.value;
@@ -36,7 +36,7 @@ export default class Opt extends Component {
     this.setState({value: val});
     font = this.getFont({content: val});
     this.props.optDom.setState({children: font});
-  }
+  };
 
   colorChange = (e) => {
     let val = e.target.value;
@@ -44,7 +44,7 @@ export default class Opt extends Component {
     this.setState({fontColor: val});
     font = this.getFont({color: val});
     this.props.optDom.setState({children: font});
-  }
+  };
 
   render() {
     return (

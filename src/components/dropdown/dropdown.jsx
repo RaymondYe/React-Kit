@@ -33,6 +33,6 @@ export default class Dropdown extends Component {
     );
   }
 
-};
+}
 
 // <DropdownComponent title text options />

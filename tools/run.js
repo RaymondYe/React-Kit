@@ -26,4 +26,4 @@ if (process.mainModule.children.length === 0 && process.argv.length > 2) {
   run(require('./' + module + '.js')).catch(err => console.error(err.stack));
 }
 
-export default run;
+module.exports = run;

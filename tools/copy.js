@@ -1,5 +1,4 @@
 import path from 'path';
-import Promise from 'bluebird';
 import watch from './lib/watch';
 import ncp from 'ncp';
 
@@ -20,4 +19,4 @@ async function copy() {
   }
 }
 
-export default copy;
+module.exports = copy;

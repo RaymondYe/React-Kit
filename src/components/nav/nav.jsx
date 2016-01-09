@@ -14,13 +14,13 @@ export default class Nav extends Component {
     this.setState({
       isModalOpen: true
     });
-  }
+  };
 
   closeModal = () => {
     this.setState({
       isModalOpen: false
     });
-  }
+  };
 
   createFont = () => {
     this.state.modalMain = (
@@ -28,7 +28,7 @@ export default class Nav extends Component {
       <button onClick={this.closeModal} className="btn btn-danger">取消</button>
       </FontModalComponent>);
     this.openModal();
-  }
+  };
 
   render() {
     return <div>
