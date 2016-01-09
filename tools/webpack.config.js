@@ -4,8 +4,9 @@ import merge from 'lodash.merge';
 // Webpack plugin that emits a json file with assets paths.
 import AssetsPlugin from 'assets-webpack-plugin';
 
-const DEBUG = !process.argv.includes('--release');
-const VERBOSE = process.argv.includes('--verbose');
+const DEBUG = !process.argv.includes('release');
+console.log('debugger:'+DEBUG);
+const VERBOSE = process.argv.includes('verbose');
 const AUTOPREFIXER_BROWSERS = [
   'Android 2.3',
   'Android >= 4',
