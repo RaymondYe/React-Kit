@@ -31,7 +31,7 @@ export default class Nav extends Component {
   };
 
   render() {
-    return <div>
+    return (<div>
       <ul className="nav">
         <li onTouchStart={this.createFont}>Text</li>
         <li onTouchStart={this.props.prevPage}>Prev</li>
@@ -42,7 +42,7 @@ export default class Nav extends Component {
       transitionName="modal-anim">
       {this.state.modalMain}
       </ModalComponent>
-    </div>
+    </div>);
   }
 
 };

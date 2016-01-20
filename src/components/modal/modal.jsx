@@ -8,17 +8,18 @@ export default class Modal extends Component {
   };
 
   render() {
-    let result = null;
-
+    let item = '';
+    let cls = 'modal';
     if (this.props.isOpen){
-      result = <ReactCSSTransitionGroup transitionName={this.props.transitionName} transitionEnterTimeout={500}>
-        <div className="modal">
-          {this.props.children}
-        </div>
-      </ReactCSSTransitionGroup>
+      item = this.props.children;
+      cls = 'modal active'
     }
 
-    return result;
+    return (<div className={cls}>
+      <ReactCSSTransitionGroup transitionName={this.props.transitionName} transitionEnterTimeout={500} transitionLeaveTimeout={0}>
+        {item}
+      </ReactCSSTransitionGroup>
+    </div>);
   }
 
 };

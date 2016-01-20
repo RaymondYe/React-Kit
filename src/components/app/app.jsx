@@ -3,6 +3,7 @@ import PageComponent from '../page';
 import NavComponent from '../nav';
 import DropdownComponent from '../dropdown';
 import './app.less';
+import TodolistComponent from '../todolist';
 
 export default class App extends Component {
   state = {
@@ -74,8 +75,7 @@ export default class App extends Component {
     return (<div className='App-box' ref='APP' {...this.props}>
       {PAGECOMPONENT}
       <NavComponent nextPage={this.nextPage} prevPage={this.prevPage}/>
-    </div>
-    );
+    </div>);
   }
 
 }
