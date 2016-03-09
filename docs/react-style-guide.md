@@ -94,6 +94,7 @@ export default class SampleComponent extends Component {
 
   static defaultProps = { ... };
 
+  // getInitialState
   state = { ... };
 
   constructor() {

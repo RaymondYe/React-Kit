@@ -5,7 +5,6 @@ import merge from 'lodash.merge';
 import AssetsPlugin from 'assets-webpack-plugin';
 
 const DEBUG = !process.argv.includes('release');
-console.log('debugger:'+DEBUG);
 const VERBOSE = process.argv.includes('verbose');
 const AUTOPREFIXER_BROWSERS = [
   'Android 2.3',
