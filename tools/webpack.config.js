@@ -95,26 +95,45 @@ const appConfig = merge({}, config, {
   entry: {
     app: './src/app.js'
   },
+
   output: {
     path: path.join(__dirname, '../build/public'),
     filename: DEBUG ? '[name].js' : '[name].[hash].js'
   },
+
+  // Choose a developer tool to enhance debugging
+  // http://webpack.github.io/docs/configuration.html#devtool
   devtool: DEBUG ? 'cheap-module-eval-source-map' : false,
+
+  // https://github.com/sporto/assets-webpack-plugin
   plugins: [
+    // Define free variables
     new DefinePlugin(GLOBALS),
+
+    // Emit a file with assets paths
     new AssetsPlugin({
       path: path.join(__dirname, '../build'),
       filename: 'assets.js',
       prettyPrint: true,
       processOutput: x => `module.exports = ${JSON.stringify(x)};`,
     }),
+
+    // Assign the module and chunk ids by occurrence count
+    // Consistent ordering of modules required if using any hashing ([hash] or [chunkhash])
+    new webpack.optimize.OccurenceOrderPlugin(true),
     ...(DEBUG ? [] : [
+
+      // Search for equal or similar files and deduplicate them in the output
       new webpack.optimize.DedupePlugin(),
+
+      // Minimize all JavaScript output of chunks
       new webpack.optimize.UglifyJsPlugin({
         compress: {
           warnings: VERBOSE
         }
       }),
+
+      // A plugin for a more aggressive chunk merging strategy
       new webpack.optimize.AggressiveMergingPlugin()
     ])
   ]
