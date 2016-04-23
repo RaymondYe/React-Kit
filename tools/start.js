@@ -14,34 +14,16 @@ async function start() {
   await require('./build')();
 
   await new Promise(resolve => {
+
     // Patch the client-side bundler configurations
     // to enable Hot Module Replacement (HMR) and React Transform
     webpackConfig.filter(x => x.target !== 'none').forEach(config => {
 
       config.entry = {
-        app: ['webpack-hot-middleware/client', './src/app.js']
+        app: ['webpack-hot-middleware/client', './src/app.js', 'babel-polyfill']
       };
       config.plugins.push(new webpack.HotModuleReplacementPlugin());
       config.plugins.push(new webpack.NoErrorsPlugin());
-      // config.module.loaders
-      //   .filter(x => x.loader === 'babel-loader')
-      //   .forEach(x => x.query ={
-      //     // Wraps all React components into arbitrary transforms
-      //     // https://github.com/gaearon/babel-plugin-react-transform
-      //     plugins: ['react-transform'],
-      //     extra: {
-      //       'react-transform': {
-      //         transform: [{
-      //           transform: 'react-transform-hmr',
-      //           imports: ['react'],
-      //           locals: ['module'],
-      //         }, {
-      //           transform: 'react-transform-catch-errors',
-      //           imports: ['react', 'redbox-react'],
-      //         }]
-      //       }
-      //     }
-      //   });
 
     });
 
@@ -53,27 +35,28 @@ async function start() {
 
       // Pretty colored output
       stats: webpackConfig[0].stats,
+
       // For other settings see
       // https://webpack.github.io/docs/webpack-dev-middleware
     });
-    const hotMiddlewares = bundler.compilers
+
+    const hotMiddlewares = bundler
+      .compilers
       .filter(compiler => compiler.options.target !== 'none')
       .map(compiler => webpackHotMiddleware(compiler));
 
     let handleServerBundleComplete = () => {
-      console.log('Complete');
+
     };
 
-    const defaultPath = "./build/html";
-    const staticRoutes = {
-      '/app.js': './build/public/app.js',
-      '/img':'./build/public/img'
-    };
+    const bs = Browsersync.create();
 
-    Browsersync({
+    bs.init({
       server: {
-        baseDir: defaultPath,
-        routes: staticRoutes,
+        baseDir: "./build/html",
+        routes: {
+          '/': './build/public',
+        },
         middleware: [wpMiddleware, ...hotMiddlewares]
       },
       // no need to watch '*.js' here, webpack will take care of it for us,
@@ -83,7 +66,9 @@ async function start() {
         'build/html/*.html',
       ]
     });
+
     bundler.plugin('done', () => handleServerBundleComplete());
+
   });
 
 }

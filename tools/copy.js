@@ -6,17 +6,7 @@ import ncp from 'ncp';
 async function copy() {
 
   await ncp('src/public', 'build/public');
-  await ncp('src/html', 'build/html');
 
-  if (global.WATCH) {
-    const watcher = await watch('src/html/**/*.*');
-
-    watcher.on('changed', async (file) => {
-      file = file.substr(path.join(__dirname, '../src/html/').length);
-      await ncp(`src/html/${file}`, `build/html/${file}`);
-    });
-
-  }
 }
 
 module.exports = copy;

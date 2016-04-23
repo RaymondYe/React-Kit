@@ -1,4 +1,5 @@
 import path from 'path';
+import HtmlWebpackPlugin from 'html-webpack-plugin';
 import webpack, { DefinePlugin, BannerPlugin } from 'webpack';
 import merge from 'lodash.merge';
 // Webpack plugin that emits a json file with assets paths.
@@ -6,6 +7,7 @@ import AssetsPlugin from 'assets-webpack-plugin';
 
 const DEBUG = !process.argv.includes('release');
 const VERBOSE = process.argv.includes('verbose');
+
 const AUTOPREFIXER_BROWSERS = [
   'Android 2.3',
   'Android >= 4',
@@ -74,6 +76,11 @@ const config = {
     }],
   },
 
+  externals: {
+    'react': 'React',
+    'react-dom': 'ReactDOM'
+  },
+
   postcss: function plugins(bundler){
     return [
       require('postcss-import')({addDependencyTo: bundler}),
@@ -98,15 +105,19 @@ const appConfig = merge({}, config, {
 
   output: {
     path: path.join(__dirname, '../build/public'),
-    filename: DEBUG ? '[name].js' : '[name].[hash].js'
+    filename: DEBUG ? '[name].js?[hash]' : '[name].[hash].js'
   },
 
   // Choose a developer tool to enhance debugging
   // http://webpack.github.io/docs/configuration.html#devtool
-  devtool: DEBUG ? 'cheap-module-eval-source-map' : false,
+  devtool: DEBUG ? 'source-map' : false,
 
   // https://github.com/sporto/assets-webpack-plugin
   plugins: [
+    new HtmlWebpackPlugin({
+      filename: '../html/index.html',
+      template: 'src/html/index.html'
+    }),
     // Define free variables
     new DefinePlugin(GLOBALS),
 

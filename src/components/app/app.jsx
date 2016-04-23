@@ -43,7 +43,7 @@ export default class App extends Component {
   };
 
   loadPageData(){
-    let data = require('../../lib/js/data');
+    let data = require('../../public/data/data');
     this.setState({
       maxPageIndex: data.data.pages.length - 1,
       status: 1,
