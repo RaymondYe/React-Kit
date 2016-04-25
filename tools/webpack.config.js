@@ -2,6 +2,10 @@ import path from 'path';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
 import webpack, { DefinePlugin, BannerPlugin } from 'webpack';
 import merge from 'lodash.merge';
+
+// Webpack plugin that emits a extraxt css.
+import ExtractTextPlugin from 'extract-text-webpack-plugin';
+
 // Webpack plugin that emits a json file with assets paths.
 import AssetsPlugin from 'assets-webpack-plugin';
 
@@ -56,12 +60,11 @@ const config = {
   module: {
     loaders: [{
       test: /\.less$/,
-      loaders: [
-        'style',
+      loader: ExtractTextPlugin.extract([
         'css-loader?' + (DEBUG ? 'sourceMap&' : 'minimize&'),
         'postcss-loader',
         'less',
-      ],
+      ]),
     }, {
       test: /\.json$/,
       loader: 'json'
@@ -92,11 +95,6 @@ const config = {
 
 };
 
-// Plugins Extract Css
-// config.plugins push new ExtractTextPlugin("[name].css")
-// Chnage Css Loader
-// loader: ExtractTextPlugin.extract("style-loader", "css-loader!less-loader")
-// loader: ExtractTextPlugin.extract("style-loader", "css-loader")
 
 // Configuration for the client-side bundle (app.js)
 const appConfig = merge({}, config, {
@@ -120,6 +118,9 @@ const appConfig = merge({}, config, {
       filename: '../html/index.html',
       template: 'src/html/index.html'
     }),
+    
+    //  Extraxt Css
+    new ExtractTextPlugin("app.css"),
 
     // Define free variables
     new DefinePlugin(GLOBALS),

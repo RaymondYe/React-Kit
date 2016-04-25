@@ -30,7 +30,7 @@
     "css-loader": "^0.23.0",
     "csscomb": "^3.1.8",
     "del": "^1.2.0",
-    "extract-text-webpack-plugin": "^0.8.2",
+    "extract-text-webpack-plugin": "^1.0.1",
     "file-loader": "^0.8.5",
     "gaze": "^0.5.1",
     "html-webpack-plugin": "^2.16.0",
