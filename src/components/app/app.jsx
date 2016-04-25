@@ -42,13 +42,64 @@ export default class App extends Component {
     });
   };
 
+  firstUpperCase = (str) => {
+    return str.toString()[0].toUpperCase() + str.toString().slice(1);
+  };
+
+  adapter = (data) => {
+    let result = null;
+    let cmps = null;
+    let cmp = null;
+    let style = null;
+    let arr = ['font-size', 'line-height', 'font-family', 'border-width', 'font-weight', 'text-align', 'border-radius', 'border-style', 'border-color'];
+    let arrItem = null;
+
+    if(!data || !data.data){
+      return result;
+    }
+
+    result = data.data;
+
+    for (var i = 0; i < result.pages.length; i++) {
+      cmps = result.pages[i].cmps;
+      for (var j = 0; j < cmps.length; j++) {
+        cmp = cmps[j];
+        style = {};
+
+        for (var key in cmp.style) {
+          if (cmp.style.hasOwnProperty(key)) {
+            if(!cmp.style[key] && cmp.style[key] !== 0){
+              continue;
+            }
+            if(arr.indexOf(key) >= 0){
+              let item = '';
+              arrItem = key.split('-');
+              item = arrItem[0]+this.firstUpperCase(arrItem[1]);
+              if(item === 'lineHeight'){
+                style[item] = cmp.style[key] + 'px';
+              }else{
+                style[item] = cmp.style[key];
+              }
+            }else{
+              style[key] = cmp.style[key];
+            }
+          }
+        }
+        cmp.style = style;
+      }
+    }
+    return result;
+  };
+
   loadPageData(){
-    let data = require('../../public/data/data');
+
+    let data = this.adapter(require('../../public/data/data'));
+    
     this.setState({
-      maxPageIndex: data.data.pages.length - 1,
+      maxPageIndex: data.pages.length - 1,
       status: 1,
-      name: data.data.name,
-      pageData: data.data
+      name: data.name,
+      pageData: data
     });
   }
 
