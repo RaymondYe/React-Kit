@@ -1,6 +1,7 @@
 import React, {PropTypes, Component} from 'react';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import './modal.less';
+
+const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
 
 export default class Modal extends Component {
   static propTypes = {
@@ -10,6 +11,7 @@ export default class Modal extends Component {
   render() {
     let item = '';
     let cls = 'modal';
+
     if (this.props.isOpen){
       item = this.props.children;
       cls = 'modal active'

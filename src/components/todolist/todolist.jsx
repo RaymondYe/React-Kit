@@ -1,6 +1,8 @@
 import React, {PropTypes, Component} from 'react';
-import ReactCSSTransitionGroup from 'react-addons-css-transition-group';
 import './todolist.less';
+
+const ReactCSSTransitionGroup = React.addons.CSSTransitionGroup;
+
 
 export default class TodoList extends Component {
   state =  {items: ['hello', 'world', 'click', 'me']};
@@ -25,6 +27,7 @@ export default class TodoList extends Component {
         </div>
       );
     }.bind(this));
+
     return (
       <div className="todolist">
         <button onClick={this.handleAdd}>Add Item</button>

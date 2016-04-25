@@ -36,7 +36,7 @@ const config = {
     reasons: DEBUG,
     hash: VERBOSE,
     version: VERBOSE,
-    timings: VERBOSE,
+    timings: true,
     chunks: VERBOSE,
     chunkModules: VERBOSE,
     cached: VERBOSE,
@@ -48,8 +48,9 @@ const config = {
   ],
 
   resolve: {
-    root: [],
-    extensions: ['', '.webpack.js', '.web.js', '.js', '.jsx', '.coffee', '.json']
+    root: path.resolve(__dirname, '../src'),
+    modulesDirectories: ['node_modules'],
+    extensions: ['', '.js', '.jsx', '.json']
   },
 
   module: {
@@ -114,10 +115,12 @@ const appConfig = merge({}, config, {
 
   // https://github.com/sporto/assets-webpack-plugin
   plugins: [
+    // Create index.html
     new HtmlWebpackPlugin({
       filename: '../html/index.html',
       template: 'src/html/index.html'
     }),
+
     // Define free variables
     new DefinePlugin(GLOBALS),
 

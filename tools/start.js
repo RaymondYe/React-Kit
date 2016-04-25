@@ -4,7 +4,7 @@ import webpackMiddleware from 'webpack-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackConfig from './webpack.config';
 
-global.WATCH = true;
+const DEBUG = !process.argv.includes('release');
 
 /**
  * Launches a development web server with "live reload" functionality -
@@ -20,7 +20,7 @@ async function start() {
     webpackConfig.filter(x => x.target !== 'none').forEach(config => {
 
       config.entry = {
-        app: ['webpack-hot-middleware/client', './src/app.js', 'babel-polyfill']
+        app: ['webpack-hot-middleware/client', './src/app.js']
       };
       config.plugins.push(new webpack.HotModuleReplacementPlugin());
       config.plugins.push(new webpack.NoErrorsPlugin());
@@ -46,7 +46,7 @@ async function start() {
       .map(compiler => webpackHotMiddleware(compiler));
 
     let handleServerBundleComplete = () => {
-
+      console.log('Plugins done');
     };
 
     const bs = Browsersync.create();
