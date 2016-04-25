@@ -45,10 +45,6 @@ async function start() {
       .filter(compiler => compiler.options.target !== 'none')
       .map(compiler => webpackHotMiddleware(compiler));
 
-    let handleServerBundleComplete = () => {
-      console.log('Plugins done');
-    };
-
     const bs = Browsersync.create();
 
     bs.init({
@@ -67,7 +63,13 @@ async function start() {
       ]
     });
 
-    bundler.plugin('done', () => handleServerBundleComplete());
+    bundler.plugin('done', function(stats) {
+      stats.stats.forEach((stat) => {
+        stat.compilation.children = stat.compilation.children.filter((child) => {
+          return child.name !== 'extract-text-webpack-plugin';
+        });
+      });
+    });
 
   });
 
