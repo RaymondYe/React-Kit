@@ -115,7 +115,7 @@ const appConfig = merge({}, config, {
   plugins: [
     // Create index.html
     new HtmlWebpackPlugin({
-      filename: '../html/index.html',
+      filename: '../index.html',
       template: 'src/html/index.html'
     }),
     

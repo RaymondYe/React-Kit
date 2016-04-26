@@ -58,13 +58,6 @@
     "webpack-hot-middleware": "^2.6.0",
     "webpack-middleware": "^1.4.0"
   },
-  "jest": {
-    "rootDir": "./src",
-    "scriptPreprocessor": "../preprocessor.js",
-    "unmockedModulePathPatterns": [
-      "react"
-    ]
-  },
   "scripts": {
     "clean": "babel-node tools/run clean",
     "copy": "babel-node tools/run copy",

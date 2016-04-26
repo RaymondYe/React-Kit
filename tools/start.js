@@ -49,7 +49,7 @@ async function start() {
 
     bs.init({
       server: {
-        baseDir: "./build/html",
+        baseDir: "./build",
         routes: {
           '/': './build/public',
         },
