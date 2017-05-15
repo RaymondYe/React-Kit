@@ -1,30 +1,45 @@
-### Features
+React-Kit
+=========
+
+kickstart new project width react, webpack, es6
 
 - Equip with React, ES6 & Babel
 - Build with Webpack
 - Support hot module replacement
 
-###Getting Started
-```shell
+
+Requirements
+------------
+Paddington requires the following to run:
+
+* [Node.js][node] 0.10+
+* [npm][npm] (normally comes with Node.js)
+
+
+Usage
+-----
+
+### How to Start
+
+```sh
 $ git clone https://github.com/RaymondYe/React-Kit
+
 $ cd React-Kit
-$ npm install   # Install Node.js components listed in ./package.json
-$ npm start     # Compile and launch
-```
 
-###How to Build
-```shell
-$ npm run build
-# or `npm run build release`
-```
+# Install Node.js components listed in ./package.json
+$ npm install
 
-###How to Run
-```shell
+# Compile and launch
 $ npm start
-# or `npm start release`
 ```
 
-###Directory Layout
+### How to Build
+```sh
+$ npm run build
+```
+
+
+### Directory Layout
 ```
 - /build                  # The folder for compiled output
 - /docs                   # Document files for the project
