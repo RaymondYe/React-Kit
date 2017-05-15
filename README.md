@@ -39,7 +39,9 @@ npm run build
 ```
 
 
-### Directory Layout
+Directory Layout
+----------------
+
 ```
 - /build                  # The folder for compiled output
 - /docs                   # Document files for the project
