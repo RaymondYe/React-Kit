@@ -12,8 +12,8 @@ Requirements
 ------------
 Paddington requires the following to run:
 
-* [Node.js][node] 0.10+
-* [npm][npm] (normally comes with Node.js)
+* [Node.js](http://nodejs.org/) 0.10+
+* [npm](https://www.npmjs.com/) (normally comes with Node.js)
 
 
 Usage
@@ -22,20 +22,20 @@ Usage
 ### How to Start
 
 ```sh
-$ git clone https://github.com/RaymondYe/React-Kit
+git clone https://github.com/RaymondYe/React-Kit
 
-$ cd React-Kit
+cd React-Kit
 
 # Install Node.js components listed in ./package.json
-$ npm install
+npm install
 
 # Compile and launch
-$ npm start
+npm start
 ```
 
 ### How to Build
 ```sh
-$ npm run build
+npm run build
 ```
 
 
