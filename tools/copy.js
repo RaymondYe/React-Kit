@@ -1,12 +1,10 @@
 import path from 'path';
-import watch from './lib/watch';
 import ncp from 'ncp';
 
-// Copies static files to the output (build) folder.
+// Copies static files to the output (dist) folder.
 async function copy() {
-
-  await ncp('src/public', 'build/public');
-
+	await ncp('src/public', 'dist/public');
+	await ncp('dist/vendor', 'dist/public');
 }
 
-module.exports = copy;
+export default copy;

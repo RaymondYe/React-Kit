@@ -1,11 +1,11 @@
 import del from 'del';
-import mkdirp from 'mkdirp'
+import fs from './lib/fs';
 
-// Cleans up the output (build) directory.
+// Cleans up the output (dist) directory.
 async function clean() {
-  await del.sync(['.tmp', 'build/*', '!build/.git'], { dot: true });
-  await mkdirp('build/public');
-  await mkdirp('build/html');
+	await del.sync(['.tmp', 'dist/*', '!dist/vendor', '!dist/.git'], { dot: true });
+	await fs.makeDir('dist/public');
+	await fs.makeDir('dist/content');
 }
 
-module.exports = clean;
+export default clean;
