@@ -1,6 +1,0 @@
-{
-  "name": "image",
-  "version": "0.0.0",
-  "private": true,
-  "main": "./image.jsx"
-}
