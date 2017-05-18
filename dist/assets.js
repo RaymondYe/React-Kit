@@ -1,1 +1,0 @@
-module.exports = {"app":{"js":"app.js?8ba26a71faaf70eb1d12"}};
