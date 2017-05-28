@@ -1,6 +1,6 @@
 import React, { PropTypes, Component } from 'react';
 
-import '../../styles/common.less';
+import 'styles/common.less';
 import './app.less';
 
 class App extends Component{

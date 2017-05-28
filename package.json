@@ -54,6 +54,7 @@
     "url-loader": "^0.5.8",
     "walk": "^2.3.9",
     "webpack": "^2.5.1",
+    "webpack-dev-middleware": "^1.10.2",
     "webpack-hot-middleware": "^2.18.0",
     "webpack-middleware": "^1.5.1"
   },
@@ -65,7 +66,6 @@
     "dll": "babel-node tools/run dll",
     "start": "babel-node tools/run start",
     "deploy": "babel-node tools/run deploy",
-    "cdn": "babel-node tools/run cdn",
-    "release": "node tools/release"
+    "cdn": "babel-node tools/run cdn"
   }
 }

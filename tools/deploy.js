@@ -11,13 +11,11 @@ async function deploy() {
 
 	await run(build);
 	await run(cdn);
-
-	await ncp(contentPath, serverPath, function (err) {
+	await ncp(contentPath, serverPath, function(err) {
 		if (err) {
 			return console.error(err);
 		}
 	});
-
 }
 
 export default deploy;

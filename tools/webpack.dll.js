@@ -1,35 +1,38 @@
-import webpack from 'webpack';
 import path from 'path';
+import webpack from 'webpack';
+import AssetsPlugin from 'assets-webpack-plugin';
+import { vendor } from './config';
 
-const DEBUG = !process.argv.includes('--release');
-const vendor = [
-  "react",
-  "react-dom",
-  "whatwg-fetch"
-];
+const isDebug = !process.argv.includes('--release');
 const GLOBALS = {
-  'process.env.NODE_ENV': DEBUG ? '"development"' : '"production"',
-  '__DEV__': DEBUG
+	'process.env.NODE_ENV': isDebug ? '"development"' : '"production"',
+	__DEV__: isDebug
 };
-const isMin = DEBUG ? '' : '.min';
 
 const config = {
-  entry:{
-    vendor: vendor
-  },
-  output:{
-    filename: DEBUG ? '[name].dll.js' : '[name].dll.min.js',
-    path: path.join(__dirname, '../dist/vendor'),
-    library:"[name]"
-  },
-  plugins:[
-    new webpack.DefinePlugin(GLOBALS),
-    new webpack.DllPlugin({
-      path: path.resolve( __dirname, '../dist/vendor/[name]-manifest'+isMin+'.json'),
-      name: "[name]"
-    }),
-    ...(DEBUG ? [] : [new webpack.optimize.UglifyJsPlugin()])
-  ]
-}
+	entry: {
+		vendor: vendor
+	},
+	output: {
+		filename: isDebug ? '[name].[hash].js' : '[name].[hash].min.js',
+		path: path.join(__dirname, '../assets/vendor'),
+		library: '[name]'
+	},
+	plugins: [
+		new webpack.DefinePlugin(GLOBALS),
+		new webpack.DllPlugin({
+			path: path.resolve(
+				__dirname,
+				`../assets/vendor/[name]-manifest${isDebug ? '' : '.min'}.json`
+			),
+			name: '[name]'
+		}),
+		new AssetsPlugin({
+			filename: isDebug ? 'dll-config.json' : 'dll-config.min.json',
+			path: path.join(__dirname, '../assets/vendor')
+		}),
+		...(isDebug ? [] : [new webpack.optimize.UglifyJsPlugin()])
+	]
+};
 
-export default config
+export default config;

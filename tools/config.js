@@ -1,17 +1,16 @@
 import path from 'path';
 
+// CDN config
 export const ossBucket = 'ossBucket';
 export const ossPrefix = 'ossPrefix';
 export const ossMaxAge = 365 * 24 * 60 * 60;
 export const ossStaticPath = path.join(__dirname, '../dist/public');
-
 export const ossConfig = {
 	accessKeyId: '',
 	secretAccessKey: '',
 	endpoint: '',
 	apiVersion: ''
 };
-
 export const ossContentType = {
 	js: 'application/javascript',
 	css: 'text/css',
@@ -24,3 +23,7 @@ export const ossContentType = {
 	ttf: 'application/x-font-ttf',
 	woff: 'application/font-woff'
 };
+
+
+// Dll Config
+export const vendor = ['react', 'react-dom', 'whatwg-fetch'];
