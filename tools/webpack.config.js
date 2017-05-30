@@ -171,6 +171,9 @@ const config = {
 							presets: ['react', 'es2015', 'stage-0'],
 							// http://babeljs.io/docs/plugins/
 							plugins: [
+								'syntax-dynamic-import',
+								'transform-async-to-generator',
+								'transform-regenerator',
 								'transform-runtime',
 								...(DEBUG
 									? []
