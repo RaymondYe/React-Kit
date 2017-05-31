@@ -5,7 +5,4 @@ import APP from './containers/app';
 const AppElement = document.getElementById('app');
 
 // Render App Components
-ReactDom.render(
-	<APP/>,
-	AppElement
-);
+ReactDom.render(<APP />, AppElement);

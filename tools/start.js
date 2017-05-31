@@ -103,6 +103,7 @@ async function start() {
 			});
 		}
 
+		let isBrowsersyncCreated = false;
 		let handleServerBundleComplete = ()=>{
 			const bs = Browsersync.create();
 			const middlewareArr = [wpMiddleware, hotMiddleware, routeMiddleware];
@@ -122,7 +123,9 @@ async function start() {
 		};
 
 		bundler.plugin('done', () => {
+			if (isBrowsersyncCreated) return;
 			handleServerBundleComplete();
+			isBrowsersyncCreated = true;
 		});
 
 	});
