@@ -231,6 +231,9 @@ const config = {
 				'.json')
 		}),
 
+		// ModuleConcatenationPlugin: 启用作用域提升
+		new webpack.optimize.ModuleConcatenationPlugin(),
+
 		// DefinePlugin: 允许创建一个在编译时可以配置的全局常量。
 		// https://doc.webpack-china.org/plugins/define-plugin/
 		new webpack.DefinePlugin(GLOBALS),
