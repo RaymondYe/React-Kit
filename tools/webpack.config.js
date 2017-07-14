@@ -54,7 +54,7 @@ const config = {
 		// will work without but this is useful to set.
 		chunkFilename: '[id].[chunkHash].js'
 	},
-
+	bail: !DEBUG,
 	cache: DEBUG,
 	stats: {
 		colors: true,
@@ -71,7 +71,7 @@ const config = {
 
 	// Choose a developer tool to enhance debugging
 	// https://doc.webpack-china.org/configuration/devtool/
-	devtool: DEBUG ? 'cheap-eval-source-map' : false,
+	devtool: DEBUG ? 'cheap-source-map' : 'cheap-module-inline-source-map',
 
 	resolve: {
 		alias: alias,
@@ -80,6 +80,7 @@ const config = {
 	},
 
 	module: {
+		strictExportPresence: true,
 		rules: [
 			{
 				test: /\.less$/,
@@ -168,7 +169,12 @@ const config = {
 							cacheDirectory: DEBUG,
 							// https://babeljs.io/docs/usage/options/
 							babelrc: false,
-							presets: ['react', 'es2015', 'stage-0'],
+							presets: [[
+								'es2015',
+								{
+									'modules': false
+								}
+							],'react', 'stage-0'],
 							// http://babeljs.io/docs/plugins/
 							plugins: [
 								'syntax-dynamic-import',
@@ -259,8 +265,13 @@ const config = {
 					// UglifyJsPlugin: Minimize all JavaScript output of chunks
 					// https://doc.webpack-china.org/plugins/uglifyjs-webpack-plugin/
 					new webpack.optimize.UglifyJsPlugin({
+						beautify: false,
+						// 删除所有的注释
+						comments: false,
 						compress: {
-							warnings: VERBOSE
+							warnings: VERBOSE,
+							// 删除所有的 `console` 语句
+							drop_console: true,
 						}
 					}),
 

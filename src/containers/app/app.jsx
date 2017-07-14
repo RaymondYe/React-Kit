@@ -3,7 +3,7 @@ import React, { PropTypes, Component } from 'react';
 import 'styles/common.less';
 import './app.less';
 
-class App extends Component{
+class App extends Component {
 	render() {
 		return (
 			<div className="app">
@@ -13,4 +13,4 @@ class App extends Component{
 	}
 }
 
-export default App
+export default App;
