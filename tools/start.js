@@ -38,6 +38,7 @@ async function start() {
 		// NoEmitOnErrorsPlugin: Use the NoEmitOnErrorsPlugin to skip the emitting phase whenever there are errors while compiling.
 		// https://doc.webpack-china.org/plugins/no-emit-on-errors-plugin/
 		webpackConfig.plugins.push(new webpack.NoEmitOnErrorsPlugin());
+		webpackConfig.plugins.push(new webpack.NamedModulesPlugin());
 
 		webpackConfig
 			.module
@@ -109,7 +110,7 @@ async function start() {
 			const middlewareArr = [wpMiddleware, hotMiddleware, routeMiddleware];
 
 			bs.init({
-				...(DEBUG ? {} : { notify: false, ui: false }),
+				...(DEBUG ? { notify: false } : { notify: false, ui: false }),
 				server: {
 					baseDir: '../dist/content',
 					middleware: middlewareArr,

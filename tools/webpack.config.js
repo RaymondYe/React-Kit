@@ -46,7 +46,7 @@ const config = {
 	},
 
 	output: {
-		publicPath: DEBUG ? '' : 'public/',
+		publicPath: DEBUG ? '' : '',
 		// publicPath: DEBUG ? '' : '',
 		path: path.join(__dirname, '../dist/public'),
 		filename: DEBUG ? '[name].js?[hash]' : '[name].[hash].js',
@@ -57,21 +57,21 @@ const config = {
 	bail: !DEBUG,
 	cache: DEBUG,
 	stats: {
-		colors: true,
-		reasons: DEBUG,
-		hash: VERBOSE,
-		version: VERBOSE,
-		timings: true,
-		chunks: VERBOSE,
-		chunkModules: VERBOSE,
 		cached: VERBOSE,
 		cachedAssets: VERBOSE,
-		children: false
+		chunks: VERBOSE,
+		chunkModules: VERBOSE,
+		colors: true,
+		hash: VERBOSE,
+		modules: VERBOSE,
+		reasons: DEBUG,
+		timings: true,
+		version: VERBOSE
 	},
 
 	// Choose a developer tool to enhance debugging
 	// https://doc.webpack-china.org/configuration/devtool/
-	devtool: DEBUG ? 'cheap-source-map' : 'cheap-module-inline-source-map',
+	devtool: DEBUG ? 'cheap-source-map' : 'source-map',
 
 	resolve: {
 		alias: alias,
@@ -80,6 +80,7 @@ const config = {
 	},
 
 	module: {
+		// Make missing exports an error instead of warning
 		strictExportPresence: true,
 		rules: [
 			{
@@ -169,26 +170,27 @@ const config = {
 							cacheDirectory: DEBUG,
 							// https://babeljs.io/docs/usage/options/
 							babelrc: false,
-							presets: [[
-								'es2015',
-								{
-									'modules': false
-								}
-							],'react', 'stage-0'],
+							presets: [
+								[
+									'env',
+									{
+										targets: {
+											browsers: ['last 4 versions', '>5%', 'not ie < 9'],
+											uglify: true,
+										},
+										modules: false,
+										useBuiltIns: false,
+										// 编译是否去掉 console.log
+										debug: false,
+									},
+								],
+								'stage-2',
+								'react',
+								...(DEBUG ? [] : ['react-optimize'])
+							],
 							// http://babeljs.io/docs/plugins/
 							plugins: [
-								'syntax-dynamic-import',
-								'transform-async-to-generator',
-								'transform-regenerator',
-								'transform-runtime',
-								...(DEBUG
-									? []
-									: [
-											'transform-react-remove-prop-types',
-											'transform-react-constant-elements'
-											//http://lukecod.es/2016/03/14/react-invariant-violation-minified-exception-ios8-webpack-babel/
-											// 'transform-react-inline-elements',
-										])
+								...(DEBUG ? ['transform-react-jsx-source', 'transform-react-jsx-self'] : [])
 							]
 						}
 					}
@@ -271,7 +273,7 @@ const config = {
 						compress: {
 							warnings: VERBOSE,
 							// 删除所有的 `console` 语句
-							drop_console: true,
+							drop_console: true
 						}
 					}),
 
