@@ -29,7 +29,7 @@ const srcPath = path.resolve(__dirname, '../src');
 	You can import module like this: `import App from 'components/app';`
 */
 const alias = {};
-['action', 'components', 'reducers', 'styles', 'utils'].map((el, index) => {
+['components', 'containers', 'styles', 'utils'].map((el, index) => {
 	alias[el] = path.resolve(srcPath, el);
 });
 
