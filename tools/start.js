@@ -31,41 +31,25 @@ async function start() {
 		// Patch the client-side bundler configurations
 		// to enable Hot Module Replacement (HMR) and React Transform
 		webpackConfig.entry = {
-			app: ['webpack-hot-middleware/client'].concat(webpackConfig.entry.app)
+			app: [
+				'react-hot-loader/patch',
+				'react-error-overlay',
+				'webpack-hot-middleware/client?name=client&reload=true'
+			].concat(webpackConfig.entry.app)
 		};
+		webpackConfig.module.rules.find(
+			x => {
+				let use = x.use[0];
+				if (use.loader === 'babel-loader') {
+					use.options.plugins = ['react-hot-loader/babel'].concat(use.options.plugins || []);
+				}
+		});
 
 		webpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
 		// NoEmitOnErrorsPlugin: Use the NoEmitOnErrorsPlugin to skip the emitting phase whenever there are errors while compiling.
 		// https://doc.webpack-china.org/plugins/no-emit-on-errors-plugin/
 		webpackConfig.plugins.push(new webpack.NoEmitOnErrorsPlugin());
 		webpackConfig.plugins.push(new webpack.NamedModulesPlugin());
-
-		webpackConfig
-			.module
-			.rules
-			.filter(x => x.loader === 'babel')
-			.forEach(x => (x.query = {
-				...x.query,
-
-				// Wraps all React components into arbitrary transforms
-				// https://github.com/gaearon/babel-plugin-react-transform
-				plugins: [
-					...(x.query ? x.query.plugins : []),
-					['react-transform', {
-						transforms: [
-							{
-								transform: 'react-transform-hmr',
-								imports: ['react'],
-								locals: ['module'],
-							}, {
-								transform: 'react-transform-catch-errors',
-								imports: ['react', 'redbox-react'],
-							},
-						],
-					},
-					],
-				],
-			}));
 
 		// Bundler compiler
 		const bundler = webpack(webpackConfig);
@@ -77,6 +61,7 @@ async function start() {
 			// Pretty colored output
 			stats: webpackConfig.stats,
 
+			// quiet: true
 			// For other settings see
 			// https://webpack.github.io/docs/webpack-dev-middleware
 		});
@@ -117,6 +102,7 @@ async function start() {
 				},
 				serveStatic: ['.', path.join(__dirname, '../dist/public/')],
 				open: false,
+				reload: false,
 				// no need to watch '*.js' here, webpack will take care of it for us,
 				// including full page reloads if HMR won't work
 				files: ['src/content/**/*.*'],

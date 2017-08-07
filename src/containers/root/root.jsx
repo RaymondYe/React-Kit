@@ -12,7 +12,6 @@ class Root extends Component {
 		return (
 			<div className="root">
 				<Header title="React-Kit" />
-				333111112222666888
 			</div>
 		);
 	}

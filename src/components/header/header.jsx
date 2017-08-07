@@ -10,7 +10,6 @@ const Header = ({
 }) => (
 	<div className="header">
 		<h3>{title}</h3>
-		2222333
 	</div>
 );
 

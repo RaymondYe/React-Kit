@@ -73,6 +73,7 @@ const config = {
 	// https://doc.webpack-china.org/configuration/devtool/
 	devtool: DEBUG ? 'cheap-source-map' : 'source-map',
 
+	// https://webpack.js.org/configuration/resolve/
 	resolve: {
 		alias: alias,
 		modules: [srcPath, 'node_modules'],
