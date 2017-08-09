@@ -1,8 +1,3 @@
-import React, {
-	PropTypes,
-	Component
-} from 'react';
-
 import './header.less';
 
 const Header = ({

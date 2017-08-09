@@ -34,10 +34,10 @@ proptypes
 
 
 ```js
-import React, { PropTypes, Component } from 'react';
+import React from 'react';
 import './person.css';
 
-class Person extends Component {
+class Person extends React.Component {
   constructor (props) {
     super(props);
 
@@ -123,7 +123,7 @@ export default (props) => (
 #### Dynamic Children
 
 ```js
-class MyComponent extends Component {
+class MyComponent extends React.Component {
 	render() {
 
 		const listNodes = this.props.results.map((item, index) =>{
@@ -141,7 +141,7 @@ class MyComponent extends Component {
 ### Fetch Data
 
 ```js
-class CommentBox extends React {
+class CommentBox extends React.Component {
 	constructor(props){
 		super(props)
 		this.state = {

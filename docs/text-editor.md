@@ -24,11 +24,3 @@ You can also use [SublimeLinter-contrib-eslint_d](https://packagecontrol.io/pack
 Raw
 ](https://gist.github.com/max-mykhailenko/41d0c3991d92f38dcbc6#file-reg_replace-sublime-settings-L4)
 http://wesbos.com/emmet-react-jsx-sublime/
-
-
-
-
-
-
-
-

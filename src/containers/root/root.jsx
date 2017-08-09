@@ -1,13 +1,10 @@
-import React, {
-	PropTypes,
-	Component
-} from 'react';
+import React from 'react';
 
 import Header from 'components/header';
 import 'styles/common.less';
 import './root.less';
 
-class Root extends Component {
+class Root extends React.Component {
 	render() {
 		return (
 			<div className="root">
