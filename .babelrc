@@ -2,10 +2,10 @@
 	"presets": [
 		[
 			"env", {
-				targets: {
+				"targets": {
 					"node": "current"
 				}
-			},
+			}
 		],
 		"stage-2",
 		"react"
