@@ -136,7 +136,7 @@ async function start() {
 				if (err) {
 					return console.log(err);
 				}
-				let serverPath = path.join(__dirname, '../../../Rabbitpre2/RP-server/assets/dist/');
+				let serverPath = path.join(__dirname, '../../../assets/dist/');
 				let out = fs.createWriteStream(`${serverPath}/spa.html`, 'utf-8');
 				out.write(result);
 				out.end();
