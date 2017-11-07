@@ -12,8 +12,6 @@ function bundle() {
 			if (err) {
 				return reject(err);
 			}
-			// Output analyse file
-			// require('fs').writeFileSync(webpackConfig.output.path + '/stats.json', JSON.stringify(stats.toJson()))
 			console.log(stats.toString(webpackConfig.stats));
 			resolve();
 		});
