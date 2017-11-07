@@ -26,4 +26,4 @@ export const ossContentType = {
 
 
 // Dll Config
-export const vendor = ['react', 'react-dom', 'whatwg-fetch', 'babel-polyfill'];
+export const vendor = ['react', 'react-dom'];
