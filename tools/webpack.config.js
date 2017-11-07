@@ -71,7 +71,7 @@ const config = {
 
 	// Choose a developer tool to enhance debugging
 	// https://doc.webpack-china.org/configuration/devtool/
-	devtool: DEBUG ? 'cheap-source-map' : 'source-map',
+	devtool: DEBUG ? 'cheap-module-source-map' : 'source-map',
 
 	// https://webpack.js.org/configuration/resolve/
 	resolve: {
@@ -191,7 +191,17 @@ const config = {
 							],
 							// http://babeljs.io/docs/plugins/
 							plugins: [
-								...(DEBUG ? ['transform-react-jsx-source', 'transform-react-jsx-self'] : [])
+								...(DEBUG
+									? ['transform-react-jsx-source', 'transform-react-jsx-self']
+									: ['lodash']),
+								['import', { libraryName: 'antd', style: 'css' }],
+								[
+									'transform-runtime',
+									{
+										polyfill: false,
+										regenerator: true
+									}
+								]
 							]
 						}
 					}
@@ -264,6 +274,9 @@ const config = {
 						filename: 'css/[name].[contenthash].css',
 						allChunks: true
 					}),
+
+					// ModuleConcatenationPlugin: 启用作用域提升
+					new webpack.optimize.ModuleConcatenationPlugin(),
 
 					// UglifyJsPlugin: Minimize all JavaScript output of chunks
 					// https://doc.webpack-china.org/plugins/uglifyjs-webpack-plugin/
