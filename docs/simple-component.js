@@ -1,15 +1,19 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
 class Person extends React.Component {
 	constructor (props) {
 		super(props);
-
 		this.state = { smiling: false };
-
-		this.handleClick = () => {
-			this.setState({smiling: !this.state.smiling});
-		};
 	}
+
+	static PropTypes = {
+		gender: PropTypes.string
+	};
+
+	static defaultProps = {
+		gender: 'unknown'
+	};
 
 	componentWillMount () {
 		// add event listeners (Flux Store, WebSocket, document, etc.)
@@ -27,6 +31,10 @@ class Person extends React.Component {
 		return (this.state.smiling) ? "is smiling" : "";
 	}
 
+	handleClick = () => {
+		this.setState({smiling: !this.state.smiling});
+	};
+
 	render () {
 		return (
 			<div onClick={this.handleClick}>
@@ -35,13 +43,5 @@ class Person extends React.Component {
 		);
 	}
 }
-
-Person.defaultProps = {
-	name: 'Guest'
-};
-
-Person.propTypes = {
-	name: React.PropTypes.string
-};
 
 export default Person;

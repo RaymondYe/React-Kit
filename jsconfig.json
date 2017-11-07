@@ -1,0 +1,16 @@
+{
+	"compilerOptions": {
+			"jsx": "react",
+			"target": "ES6",
+			"module": "commonjs",
+			"allowSyntheticDefaultImports": true,
+			"baseUrl": "./src/",
+			"paths": {
+				"components/*": ["components/*"],
+				"containers/*": ["containers/*"],
+				"styles/*": ["styles/*"],
+				"config/*": ["config/*"],
+				"utils/*": ["utils/*"]
+			}
+	}
+}
