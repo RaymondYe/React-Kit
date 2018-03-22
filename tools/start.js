@@ -8,6 +8,13 @@ import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackConfig from './webpack.config';
+import proxy from 'http-proxy-middleware';
+
+const proxyMiddleware = proxy('**', {
+	target: 'https://www.douban.com',
+	changeOrigin: true,
+	logLevel: 'error'
+});
 
 const DEBUG = !process.argv.includes('--release');
 
@@ -93,7 +100,7 @@ async function start() {
 		let handleServerBundleComplete = ()=>{
 			const bs = Browsersync.create();
 			const middlewareArr = [wpMiddleware, hotMiddleware, routeMiddleware];
-
+			middlewareArr.push(proxyMiddleware);
 			bs.init({
 				...(DEBUG ? { notify: false } : { notify: false, ui: false }),
 				server: {

@@ -17,11 +17,11 @@ function format(time) {
 }
 
 const proxyMiddleware = proxy('**', {
-	target: 'http://localhost:8080',
+	target: 'http://pos.lepass.cn',
 	changeOrigin: true,
 	logLevel: 'error'
 });
-
+// http://pos.lepass.cn/combine-pay-customer/agent/list-agent-operators
 /**
  * Launches a development web server with "live reload" functionality -
  * synchronizing URLs, interactions and code changes across multiple devices.
@@ -44,32 +44,32 @@ async function start() {
 		webpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
 		webpackConfig.plugins.push(new webpack.NoErrorsPlugin());
 
-		webpackConfig
-			.module
-			.loaders
-			.filter(x => x.loader === 'babel')
-			.forEach(x => (x.query = {
-				...x.query,
+		// webpackConfig
+		// 	.module
+		// 	.loaders
+		// 	.filter(x => x.loader === 'babel')
+		// 	.forEach(x => (x.query = {
+		// 		...x.query,
 
-				// Wraps all React components into arbitrary transforms
-				// https://github.com/gaearon/babel-plugin-react-transform
-				plugins: [
-					...(x.query ? x.query.plugins : []),
-					// ['react-transform', {
-					// 	transforms: [
-					// 		{
-					// 			transform: 'react-transform-hmr',
-					// 			imports: ['react'],
-					// 			locals: ['module'],
-					// 		}, {
-					// 			transform: 'react-transform-catch-errors',
-					// 			imports: ['react', 'redbox-react'],
-					// 		},
-					// 	],
-					// },
-					// ],
-				],
-			}));
+		// 		// Wraps all React components into arbitrary transforms
+		// 		// https://github.com/gaearon/babel-plugin-react-transform
+		// 		plugins: [
+		// 			...(x.query ? x.query.plugins : []),
+		// 			// ['react-transform', {
+		// 			// 	transforms: [
+		// 			// 		{
+		// 			// 			transform: 'react-transform-hmr',
+		// 			// 			imports: ['react'],
+		// 			// 			locals: ['module'],
+		// 			// 		}, {
+		// 			// 			transform: 'react-transform-catch-errors',
+		// 			// 			imports: ['react', 'redbox-react'],
+		// 			// 		},
+		// 			// 	],
+		// 			// },
+		// 			// ],
+		// 		],
+		// 	}));
 
 		// Bundler compiler
 		const bundler = webpack(webpackConfig);
@@ -131,13 +131,13 @@ async function start() {
 		};
 
 		let createHtml = (cb)=> {
-			var filename = path.join(bundler.outputPath, '../content/spa.html');
+			var filename = path.join(bundler.outputPath, '../content/index.html');
 			bundler.outputFileSystem.readFile(filename, function(err, result){
 				if (err) {
 					return console.log(err);
 				}
 				let serverPath = path.join(__dirname, '../../../assets/dist/');
-				let out = fs.createWriteStream(`${serverPath}/spa.html`, 'utf-8');
+				let out = fs.createWriteStream(`${serverPath}/index.html`, 'utf-8');
 				out.write(result);
 				out.end();
 			});

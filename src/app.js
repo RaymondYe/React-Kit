@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
-
+import axios from 'axios';
 import Root from './containers/root';
 
 const AppElement = document.getElementById('app');
@@ -21,3 +21,5 @@ renderApp();
 if (module.hot) {
 	module.hot.accept('./containers/root', () => renderApp(AppElement));
 }
+
+axios.post('/combine-pay-customer/agent/list-agent-operators', {});

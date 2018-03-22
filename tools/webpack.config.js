@@ -41,6 +41,7 @@ let dllConfigUrl = DEBUG
 dllConfig = require(path.resolve(__dirname, dllConfigUrl));
 
 const config = {
+	mode: DEBUG ? 'development' : 'production',
 	entry: {
 		app: './src/app.js'
 	},
@@ -177,13 +178,13 @@ const config = {
 									{
 										targets: {
 											browsers: ['last 4 versions', '>5%', 'not ie < 9'],
-											uglify: true,
+											uglify: true
 										},
 										modules: false,
 										useBuiltIns: false,
 										// 编译是否去掉 console.log
-										debug: false,
-									},
+										debug: false
+									}
 								],
 								'stage-2',
 								'react',
@@ -227,14 +228,6 @@ const config = {
 					}
 		}),
 
-		// CommonsChunkPlugin: 提取代码中的公共模块
-		// https://doc.webpack-china.org/plugins/commons-chunk-plugin/
-		new webpack.optimize.CommonsChunkPlugin({
-			name: 'common',
-			filename: 'common.[hash].js',
-			minChunks: 3
-		}),
-
 		// ProvidePlugin: definitions 定义标识符，当遇到指定标识符的时候，自动加载模块。
 		// https://doc.webpack-china.org/plugins/provide-plugin/
 		new webpack.ProvidePlugin({
@@ -249,9 +242,6 @@ const config = {
 				(DEBUG ? '' : '.min') +
 				'.json')
 		}),
-
-		// ModuleConcatenationPlugin: 启用作用域提升
-		new webpack.optimize.ModuleConcatenationPlugin(),
 
 		// DefinePlugin: 允许创建一个在编译时可以配置的全局常量。
 		// https://doc.webpack-china.org/plugins/define-plugin/
@@ -273,22 +263,6 @@ const config = {
 					new ExtractTextPlugin({
 						filename: 'css/[name].[contenthash].css',
 						allChunks: true
-					}),
-
-					// ModuleConcatenationPlugin: 启用作用域提升
-					new webpack.optimize.ModuleConcatenationPlugin(),
-
-					// UglifyJsPlugin: Minimize all JavaScript output of chunks
-					// https://doc.webpack-china.org/plugins/uglifyjs-webpack-plugin/
-					new webpack.optimize.UglifyJsPlugin({
-						beautify: false,
-						// 删除所有的注释
-						comments: false,
-						compress: {
-							warnings: VERBOSE,
-							// 删除所有的 `console` 语句
-							drop_console: true
-						}
 					}),
 
 					// A plugin for a more aggressive chunk merging strategy
