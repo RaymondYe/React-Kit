@@ -4,12 +4,14 @@ import AssetsPlugin from 'assets-webpack-plugin';
 import { vendor } from './config';
 
 const isDebug = !process.argv.includes('--release');
+const env = isDebug ? 'development' : 'production';
 const GLOBALS = {
 	'process.env.NODE_ENV': isDebug ? '"development"' : '"production"',
 	__DEV__: isDebug
 };
 
 const config = {
+	mode: env,
 	entry: {
 		vendor: vendor
 	},
@@ -30,8 +32,7 @@ const config = {
 		new AssetsPlugin({
 			filename: isDebug ? 'dll-config.json' : 'dll-config.min.json',
 			path: path.join(__dirname, '../assets/vendor')
-		}),
-		...(isDebug ? [] : [new webpack.optimize.UglifyJsPlugin()])
+		})
 	]
 };
 

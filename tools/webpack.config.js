@@ -195,7 +195,7 @@ const config = {
 								...(DEBUG
 									? ['transform-react-jsx-source', 'transform-react-jsx-self']
 									: ['lodash']),
-								['import', { libraryName: 'antd', style: 'css' }],
+								['import', { libraryName: 'antd', style: true }],
 								[
 									'transform-runtime',
 									{
@@ -268,7 +268,10 @@ const config = {
 					// A plugin for a more aggressive chunk merging strategy
 					new webpack.optimize.AggressiveMergingPlugin()
 				])
-	]
+	],
+	performance: {
+		hints: DEBUG ? false : 'error'
+	}
 };
 
 export default config;

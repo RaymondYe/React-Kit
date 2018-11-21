@@ -53,10 +53,6 @@ async function start() {
 		});
 
 		webpackConfig.plugins.push(new webpack.HotModuleReplacementPlugin());
-		// NoEmitOnErrorsPlugin: Use the NoEmitOnErrorsPlugin to skip the emitting phase whenever there are errors while compiling.
-		// https://doc.webpack-china.org/plugins/no-emit-on-errors-plugin/
-		webpackConfig.plugins.push(new webpack.NoEmitOnErrorsPlugin());
-		webpackConfig.plugins.push(new webpack.NamedModulesPlugin());
 
 		// Bundler compiler
 		const bundler = webpack(webpackConfig);

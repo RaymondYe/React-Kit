@@ -21,5 +21,3 @@ renderApp();
 if (module.hot) {
 	module.hot.accept('./containers/root', () => renderApp(AppElement));
 }
-
-axios.post('/combine-pay-customer/agent/list-agent-operators', {});
