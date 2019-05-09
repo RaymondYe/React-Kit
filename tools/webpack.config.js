@@ -12,14 +12,8 @@ const GLOBALS = {
 	__DEV__: DEBUG
 };
 const AUTOPREFIXER_BROWSERS = [
-	'Android 2.3',
-	'Android >= 4',
-	'Chrome >= 20',
-	'Firefox >= 24',
-	'Explorer >= 8',
-	'iOS >= 6',
-	'Opera >= 12',
-	'Safari >= 6'
+	'last 2 Chrome versions',
+	'last 2 Firefox versions'
 ];
 
 const srcPath = path.resolve(__dirname, '../src');
