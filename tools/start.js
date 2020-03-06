@@ -8,9 +8,9 @@ import webpack from 'webpack';
 import webpackMiddleware from 'webpack-dev-middleware';
 import webpackHotMiddleware from 'webpack-hot-middleware';
 import webpackConfig from './webpack.config';
-import proxy from 'http-proxy-middleware';
+import {createProxyMiddleware} from 'http-proxy-middleware';
 
-const proxyMiddleware = proxy('**', {
+const proxyMiddleware = createProxyMiddleware('**', {
 	target: 'https://www.douban.com',
 	changeOrigin: true,
 	logLevel: 'error'

@@ -1,9 +1,8 @@
 import path from 'path';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import ExtractTextPlugin from 'extract-text-webpack-plugin';
 import AssetsPlugin from 'assets-webpack-plugin';
-import extend from 'extend';
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const DEBUG = !process.argv.includes('--release');
 const VERBOSE = process.argv.includes('--verbose');
@@ -11,10 +10,6 @@ const GLOBALS = {
 	'process.env.NODE_ENV': DEBUG ? '"development"' : '"production"',
 	__DEV__: DEBUG
 };
-const AUTOPREFIXER_BROWSERS = [
-	'last 2 Chrome versions',
-	'last 2 Firefox versions'
-];
 
 const srcPath = path.resolve(__dirname, '../src');
 
@@ -83,54 +78,52 @@ const config = {
 				test: /\.less$/,
 				use: DEBUG
 					? [
-							'style-loader',
-							'css-loader',
-							{
-								loader: 'postcss-loader',
-								options: {
-									plugins: function(ctx) {
-										return [
-											require('postcss-import')({
-												addDependencyTo: ctx.webpack
-											}),
-											require('precss')(),
-											require('autoprefixer')({
-												browsers: AUTOPREFIXER_BROWSERS
-											})
-										];
-									}
+						'style-loader',
+						'css-loader',
+						{
+							loader: 'postcss-loader',
+							options: {
+								plugins: function (ctx) {
+									return [
+										require('postcss-import')({
+											addDependencyTo: ctx.webpack
+										}),
+										require('precss')(),
+										require('postcss-preset-env')()
+									];
 								}
-							},
-							'less-loader'
-						]
-					: ExtractTextPlugin.extract({
-							use: [
-								{
-									loader: 'css-loader',
-									query: {
-										minimize: true
-									}
-								},
-								{
-									loader: 'postcss-loader',
-									options: {
-										plugins: function(ctx) {
-											return [
-												require('postcss-import')({
-													addDependencyTo: ctx.webpack
-												}),
-												require('precss')(),
-												require('autoprefixer')({
-													browsers: AUTOPREFIXER_BROWSERS
-												})
-											];
-										}
-									}
-								},
-								'less-loader'
-							],
-							publicPath: '../'
-						})
+							}
+						},
+						'less-loader'
+					]
+					:
+					[
+						{
+							loader: MiniCssExtractPlugin.loader,
+							options: {
+								publicPath: '../'
+							}
+						},
+						{
+							loader: 'css-loader',
+						},
+						{
+							loader: 'postcss-loader',
+							options: {
+								plugins: function (ctx) {
+									return [
+										require('postcss-import')({
+											addDependencyTo: ctx.webpack
+										}),
+										require('precss')(),
+										require('postcss-preset-env')(),
+										require('cssnano')()
+									];
+								}
+							}
+						},
+						'less-loader'
+					]
 			},
 			{
 				test: /\.(png|jpg|jpeg|gif|svg|woff|woff2)$/,
@@ -168,7 +161,7 @@ const config = {
 							babelrc: false,
 							presets: [
 								[
-									'env',
+									'@babel/preset-env',
 									{
 										targets: {
 											browsers: ['last 4 versions', '>5%', 'not ie < 9'],
@@ -180,20 +173,17 @@ const config = {
 										debug: false
 									}
 								],
-								'stage-2',
-								'react',
-								...(DEBUG ? [] : ['react-optimize'])
+								'@babel/react'
 							],
 							// http://babeljs.io/docs/plugins/
 							plugins: [
 								...(DEBUG
-									? ['transform-react-jsx-source', 'transform-react-jsx-self']
+									? ['@babel/transform-react-jsx-source', '@babel/transform-react-jsx-self']
 									: ['lodash']),
 								['import', { libraryName: 'antd', style: true }],
 								[
-									'transform-runtime',
+									'@babel/transform-runtime',
 									{
-										polyfill: false,
 										regenerator: true
 									}
 								]
@@ -217,9 +207,9 @@ const config = {
 			minify: DEBUG
 				? false
 				: {
-						removeComments: true,
-						collapseWhitespace: true
-					}
+					removeComments: true,
+					collapseWhitespace: true
+				}
 		}),
 
 		// ProvidePlugin: definitions 定义标识符，当遇到指定标识符的时候，自动加载模块。
@@ -252,16 +242,16 @@ const config = {
 		...(DEBUG
 			? []
 			: [
-					// ExtractTextPlugin: 分离样式到CSS文件
-					// https://doc.webpack-china.org/plugins/extract-text-webpack-plugin/
-					new ExtractTextPlugin({
-						filename: 'css/[name].[contenthash].css',
-						allChunks: true
-					}),
+				// MiniCssExtractPlugin: 分离样式到CSS文件
+				// https://doc.webpack-china.org/plugins/extract-text-webpack-plugin/
+				new MiniCssExtractPlugin({
+					filename: 'css/[name].[contenthash].css',
+					allChunks: true
+				}),
 
-					// A plugin for a more aggressive chunk merging strategy
-					new webpack.optimize.AggressiveMergingPlugin()
-				])
+				// A plugin for a more aggressive chunk merging strategy
+				new webpack.optimize.AggressiveMergingPlugin()
+			])
 	],
 	performance: {
 		hints: DEBUG ? false : 'error'

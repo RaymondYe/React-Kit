@@ -6,7 +6,7 @@ const writeFile = (file, contents) => new Promise((resolve, reject) => {
 });
 
 const makeDir = (name) => new Promise((resolve, reject) => {
-  mkdirp(name, err => err ? reject(err) : resolve());
+  mkdirp(name).then(() => resolve()).catch(() => {reject()});
 });
 
 export default { writeFile, makeDir };
