@@ -2,7 +2,7 @@ import React from "react";
 import { HashRouter as Router, Switch, Route } from "react-router-dom";
 import loadable from "@loadable/component";
 import Tabbar from "components/tabbar";
-import "styles/common.less";
+import "../../styles/common.less";
 import "./index.less";
 
 const Home = loadable(() => import("components/home"));

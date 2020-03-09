@@ -1,7 +1,7 @@
 import "./index.less";
 
 function About() {
-	return <div className="about">About</div>;
+	return <div styleName="about">About</div>;
 }
 
 export default About;

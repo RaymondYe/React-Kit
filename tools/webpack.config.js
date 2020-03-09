@@ -1,7 +1,8 @@
 import path from 'path';
 import webpack from 'webpack';
 import HtmlWebpackPlugin from 'html-webpack-plugin';
-import AssetsPlugin from 'assets-webpack-plugin';
+// import AssetsPlugin from 'assets-webpack-plugin';
+import loader from './loader';
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 
 const DEBUG = !process.argv.includes('--release');
@@ -76,137 +77,9 @@ const config = {
 	module: {
 		// Make missing exports an error instead of warning
 		strictExportPresence: true,
-		rules: [
-			{
-				test: /\.less$/,
-				use: DEBUG
-					? [
-						'style-loader',
-						'css-loader',
-						{
-							loader: 'postcss-loader',
-							options: {
-								plugins: function (ctx) {
-									return [
-										require('postcss-import')({
-											addDependencyTo: ctx.webpack
-										}),
-										require('precss')(),
-										require('postcss-preset-env')(),
-										require('postcss-px2rem-exclude')({
-											remUnit: 100,
-											exclude: /node_modules|folder_name/i
-										})
-									];
-								}
-							}
-						},
-						'less-loader'
-					]
-					:
-					[
-						{
-							loader: MiniCssExtractPlugin.loader,
-							options: {
-								publicPath: '../'
-							}
-						},
-						{
-							loader: 'css-loader',
-						},
-						{
-							loader: 'postcss-loader',
-							options: {
-								plugins: function (ctx) {
-									return [
-										require('postcss-import')({
-											addDependencyTo: ctx.webpack
-										}),
-										require('precss')(),
-										require('postcss-preset-env')(),
-										require('cssnano')(),
-										require('postcss-px2rem-exclude')({
-											remUnit: 100,
-											exclude: /node_modules|folder_name/i
-										})
-									];
-								}
-							}
-						},
-						'less-loader'
-					]
-			},
-			{
-				test: /\.(png|jpg|jpeg|gif|svg|woff|woff2)$/,
-				use: [
-					{
-						loader: 'file-loader',
-						options: {
-							name: DEBUG ? '[path][name].[ext]?[hash]' : 'img/[hash].[ext]'
-						}
-					}
-				]
-			},
-			{
-				test: /\.(eot|ttf|wav|mp3)$/,
-				use: [
-					{
-						loader: 'file-loader',
-						options: {
-							name: DEBUG ? '[path][name].[ext]?[hash]' : '[hash].[ext]'
-						}
-					}
-				]
-			},
-			{
-				test: /\.jsx?$/,
-				exclude: [path.resolve(__dirname, '../node_modules')],
-				include: [srcPath],
-				use: [
-					{
-						loader: 'babel-loader',
-						options: {
-							// https://github.com/babel/babel-loader#options
-							cacheDirectory: DEBUG,
-							// https://babeljs.io/docs/usage/options/
-							babelrc: false,
-							presets: [
-								[
-									'@babel/preset-env',
-									{
-										targets: {
-											browsers: ['last 4 versions', '>5%', 'not ie < 9'],
-											uglify: true
-										},
-										modules: false,
-										useBuiltIns: false,
-										// 编译是否去掉 console.log
-										debug: false
-									}
-								],
-								'@babel/react'
-							],
-							// http://babeljs.io/docs/plugins/
-							plugins: [
-								...(DEBUG
-									? ['@babel/transform-react-jsx-source', '@babel/transform-react-jsx-self']
-									: ['lodash']),
-								['import', { libraryName: 'antd-mobile', style: true }],
-								[
-									'@babel/transform-runtime',
-									{
-										regenerator: true
-									}
-								]
-							]
-						}
-					}
-				]
-			}
-		]
+		rules: loader
 	},
 
-	// https://github.com/sporto/assets-webpack-plugin
 	plugins: [
 		// HtmlWebpackPlugin: Create html
 		// https://doc.webpack-china.org/plugins/html-webpack-plugin/
@@ -243,12 +116,12 @@ const config = {
 		new webpack.DefinePlugin(GLOBALS),
 
 		// AssetsPlugin: Emit a file with assets paths
-		new AssetsPlugin({
-			path: path.join(__dirname, '../dist'),
-			filename: 'assets.js',
-			prettyPrint: true,
-			processOutput: x => `module.exports = ${JSON.stringify(x)};`
-		}),
+		// new AssetsPlugin({
+		// 	path: path.join(__dirname, '../dist'),
+		// 	filename: 'assets.js',
+		// 	prettyPrint: true,
+		// 	processOutput: x => `module.exports = ${JSON.stringify(x)};`
+		// }),
 
 		...(DEBUG
 			? []

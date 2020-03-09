@@ -3,7 +3,7 @@ import './index.less'
 
 function TabBar() {
 	return (
-		<nav className="tabbar">
+		<nav styleName="tabbar">
 			<ul>
 				<li>
 					<NavLink exact to="/">Home</NavLink>

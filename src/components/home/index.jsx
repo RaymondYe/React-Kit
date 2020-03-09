@@ -1,7 +1,7 @@
 import "./index.less";
 
 function Home() {
-	return <div className="home">Home</div>;
+	return <div styleName="home">Home</div>;
 }
 
 export default Home;

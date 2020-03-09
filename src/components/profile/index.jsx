@@ -1,7 +1,7 @@
 import "./index.less";
 
 function Profile() {
-	return <div className="profile">Profile</div>;
+	return <div styleName="profile">Profile</div>;
 }
 
 export default Profile;
