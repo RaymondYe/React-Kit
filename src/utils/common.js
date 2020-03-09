@@ -21,3 +21,27 @@ export function loadScript(src, cb) {
 
 	document.getElementsByTagName('head')[0].appendChild(script);
 }
+
+// fix ios mobile input blank
+export function fixMobileInput() {
+	let flag;
+	let timer;
+	const userAgent = navigator.userAgent;
+	const isIos = !!userAgent.match(/\(i[^;]+;( U;)? CPU.+Mac OS X/);
+	if (!isIos) return;
+	document.body.addEventListener('focusin', () => {
+		flag = true;
+		clearTimeout(timer)
+	});
+
+	document.body.addEventListener('focusout', () => {
+		flag = false;
+		if (!flag) {
+			timer = setTimeout(() => {
+				window.scrollTo({ top: 0, left: 0, behavior: 'smooth'})
+			}, 200);
+		} else {
+			return;
+		}
+	});
+}
