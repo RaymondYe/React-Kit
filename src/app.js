@@ -1,8 +1,8 @@
 import React from 'react';
 import { render } from 'react-dom';
 import { AppContainer } from 'react-hot-loader';
-import axios from 'axios';
-import Root from './containers/root';
+import FastClick from 'fastclick';
+import Root from 'containers/root';
 
 const AppElement = document.getElementById('app');
 
@@ -15,9 +15,12 @@ const renderApp = () => {
 	);
 };
 
-renderApp();
+document.addEventListener('DOMContentLoaded', ()=>{
+	FastClick.attach(document.body);
+	renderApp();
+});
 
 // React hot loader
 if (module.hot) {
-	module.hot.accept('./containers/root', () => renderApp(AppElement));
+	module.hot.accept('containers/root', () => renderApp(AppElement));
 }

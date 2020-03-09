@@ -65,7 +65,10 @@ const config = {
 
 	// https://webpack.js.org/configuration/resolve/
 	resolve: {
-		alias: alias,
+		alias: {
+			...alias,
+			'react-dom': '@hot-loader/react-dom'
+		},
 		modules: [srcPath, 'node_modules'],
 		extensions: ['.js', '.jsx', '.json']
 	},
@@ -89,7 +92,11 @@ const config = {
 											addDependencyTo: ctx.webpack
 										}),
 										require('precss')(),
-										require('postcss-preset-env')()
+										require('postcss-preset-env')(),
+										require('postcss-px2rem-exclude')({
+											remUnit: 100,
+											exclude: /node_modules|folder_name/i
+										})
 									];
 								}
 							}
@@ -117,7 +124,11 @@ const config = {
 										}),
 										require('precss')(),
 										require('postcss-preset-env')(),
-										require('cssnano')()
+										require('cssnano')(),
+										require('postcss-px2rem-exclude')({
+											remUnit: 100,
+											exclude: /node_modules|folder_name/i
+										})
 									];
 								}
 							}
@@ -180,7 +191,7 @@ const config = {
 								...(DEBUG
 									? ['@babel/transform-react-jsx-source', '@babel/transform-react-jsx-self']
 									: ['lodash']),
-								['import', { libraryName: 'antd', style: true }],
+								['import', { libraryName: 'antd-mobile', style: true }],
 								[
 									'@babel/transform-runtime',
 									{

@@ -1,5 +1,10 @@
 @import './reset.less';
 
+// rem单位100
+@rootSize: 100px;
+// 设计稿尺寸
+@designWidth: 750px;
+
 .clearfix:after {
 	content: " ";
 	display: block;
@@ -14,4 +19,8 @@ body {
 	color: #333;
 	font-size: 32px;
 	text-align: center;
+}
+
+html {
+	font-size: @rootSize / @designWidth * 100vmin;
 }

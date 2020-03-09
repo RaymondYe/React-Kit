@@ -26,4 +26,4 @@ export const ossContentType = {
 
 
 // Dll Config
-export const vendor = ['react', 'react-dom'];
+export const vendor = ['react', '@hot-loader/react-dom'];

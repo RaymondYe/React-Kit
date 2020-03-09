@@ -1,4 +1,4 @@
-import './header.less';
+import './index.less';
 
 const Header = ({
 	title
