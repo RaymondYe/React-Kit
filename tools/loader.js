@@ -104,6 +104,7 @@ export default [
 							: ['lodash']),
 						["react-css-modules", {
 							generateScopedName: '[local]-[hash:base64:10]',
+							webpackHotModuleReloading: DEBUG,
 							filetypes: {
 								".less": {
 									"syntax": "postcss-less"
