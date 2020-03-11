@@ -45,7 +45,16 @@ const cssLoader = [
 export default [
 	{
 		test: /\.less$/,
-		use: cssLoader
+		use: cssLoader,
+		exclude: /node_modules/i
+	},
+	// 针对antd不开启CSS Modules处理
+	{
+		test: /\.css$/,
+		use: [
+			{loader: 'style-loader'},
+			{loader: 'css-loader'}
+		]
 	},
 	{
 		test: /\.(png|jpg|jpeg|gif|svg|woff|woff2)$/,
@@ -109,9 +118,9 @@ export default [
 								".less": {
 									"syntax": "postcss-less"
 								}
-							}
+							},
 						}],
-						['import', { libraryName: 'antd-mobile', style: true }],
+						['import', { libraryName: "antd-mobile", style: "css" }],
 						[
 							'@babel/transform-runtime',
 							{
