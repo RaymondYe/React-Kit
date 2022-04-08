@@ -48,7 +48,7 @@
     "less": "^3.11.1",
     "less-loader": "^5.0.0",
     "mini-css-extract-plugin": "^0.9.0",
-    "minimist": "^1.2.0",
+    "minimist": "^1.2.6",
     "mkdirp": "^1.0.3",
     "ncp": "^2.0.0",
     "postcss": "^7.0.27",
